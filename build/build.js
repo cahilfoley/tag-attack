@@ -810,6 +810,15 @@ let farewellMessages = [
       Matt
     `,
         sender: 'Matt'
+    },
+    {
+        content: trimmed `
+      FJ you provided great coaching to the team with your diverse experience in IST industry.
+      <br/>
+      <br/>
+      It is our loss, however I am sure we will cross paths on future project opportunities.
+    `,
+        sender: 'Prateek'
     }
 ];
 function trimLines(string) {
