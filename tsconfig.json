@@ -10,5 +10,6 @@
     "noImplicitAny": true,
     "module": "none",
     "pretty": true
-  }
+  },
+  "exclude": ["database-blaster-win32-x64", "build", "node_modules"]
 }
