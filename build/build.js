@@ -715,8 +715,8 @@ let farewellMessages = [
         content: trimmed `
       Yooo,<br/>
   <br/>
-      This definitely isn't goodbye since we're in the same team.... but it's been awesome working in the AMES team with you. Thanks for listening to my pre-coffee rambles, and for always somehow figuring out easy fixes to my annoying DAX and SQL problems.<br/>
-      Here's to more coffee catchups in the (hopefully) near future 😁<br/>
+      This definitely isnt goodbye since were in the same team.... but its been awesome working in the AMES team with you. Thanks for listening to my pre-coffee rambles, and for always somehow figuring out easy fixes to my annoying DAX and SQL problems.<br/>
+      Heres to more coffee catchups in the (hopefully) near future<br/>
       Thanks for everything!<br/>
   <br/>
       Ayesha
@@ -740,7 +740,7 @@ let farewellMessages = [
         content: trimmed `
       Hola FJ!<br/>
         <br/>
-      Thank you so much for all the mentoring you have provided and the laughs shared. I wish you all the best with your next project and hope you miss us so terribly that you come back once its done 🙂 Stay safe you rock-star.<br/>
+      Thank you so much for all the mentoring you have provided and the laughs shared. I wish you all the best with your next project and hope you miss us so terribly that you come back once its done. Stay safe you rock-star.<br/>
       Yours from afar,<br/>
       <br/>
       Boxy
@@ -784,10 +784,10 @@ let farewellMessages = [
       Hey Database Super-Guru,
       <br/>
       <br/>
-      Thanks for all your help over what feels like years now, you've been an absolute star when we've been under the pump. You will be sorely missed, I only wish that I got to work with you more!
+      Thanks for all your help over what feels like years now, youve been an absolute star when weve been under the pump. You will be sorely missed, I only wish that I got to work with you more!
       <br/>
       <br/>
-      I don't think words can really do it justice so I hope this game that Steve and I made for you sums it up 😁.
+      I dont think words can really do it justice so I hope this game that Steve and I made for you sums it up.
       <br/>
       <br/>
       All the best for everything the future holds, I hope our (atleast virtual) paths cross again one day!
