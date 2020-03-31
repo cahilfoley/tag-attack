@@ -752,8 +752,8 @@ let farewellMessages = [
         content: trimmed `
       BYEEEEEEEEEEEE FJ!!
       <br/><br/>
-      It has been a pleasure fighting with you for the last (Can’t even remember how long.. its been a long time).
-      I’ll miss coming over to you and bypassing our beloved RTTMS system to get AUPERSQL117 in tip top shape when it falls over, although we haven’t directly worked with each other much, we can always rely on 117’s problems to bring us together J
+      It has been a pleasure fighting with you for the last (Cant even remember how long.. its been a long time).
+      I’ll miss coming over to you and bypassing our beloved RTTMS system to get AUPERSQL117 in tip top shape when it falls over, although we haven’t directly worked with each other much, we can always rely on 117s problems to bring us together J
       But on a serious note, your thorough understanding of the teams architecture and the developments you have made to make 117 usable is really commendable and I thank you for your hard work (We all know it probably some of the most stressful stuff) you will be missed thoroughly.
       Yours truly, the annoying guy who comes to you to fix things J
       <br/><br/>
