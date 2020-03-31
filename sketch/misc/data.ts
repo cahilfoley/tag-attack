@@ -61,9 +61,6 @@ const levels: RoundSettings[] = [
     waves: [[{ enemy: BossEnemy, count: 1 }]]
   },
   {
-    waves: [[{ enemy: BossEnemy, count: 10 }]]
-  },
-  {
     waves: [
       [
         { enemy: SQLEnemy, count: 3 },
@@ -101,7 +98,10 @@ const levels: RoundSettings[] = [
         { enemy: SpotfireEnemy, count: 4 }
       ]
     ]
-  }
+  },  
+  {
+    waves: [[{ enemy: BossEnemy, count: 10 }]]
+  },
 ]
 
 const messagePrefix = [
