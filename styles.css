@@ -25,6 +25,10 @@
   z-index: 10;
 }
 
+#retry {
+  top: 80%;
+}
+
 #continue {
   top: 95%;
 }
