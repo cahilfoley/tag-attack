@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ts": "tsc",
-    "build:electron": "electron-packager --ignore=\"(node_modules|.git|sketch)\" --out=dist/win --icon=images/fj.ico .",
+    "build:electron": "electron-builder",
     "build": "npm run build:ts && npm run build:electron",
     "electron": "electron .",
     "start": "run-p start-compile start-run",
@@ -21,8 +21,36 @@
     "@types/p5": "^0.9.0",
     "browser-sync": "^2.26.7",
     "electron": "^8.2.0",
-    "electron-packager": "^14.2.1",
+    "electron-builder": "^22.4.1",
     "npm-run-all": "^4.1.5",
     "typescript": "^3.6.3"
+  },
+  "build": {
+    "appId": "database.blaster",
+    "productName": "FJ's Database Blaster",
+    "win": {
+      "target": [
+        "portable"
+      ]
+    },
+    "portable": {
+      "artifactName": "FJs Data Blaster.exe"
+    },
+    "directories": {
+      "output": "dist/output",
+      "app": ".",
+      "buildResources": "."
+    },
+    "files": [
+      "!node_modules/**/*",
+      "images/*",
+      "sounds/*",
+      "fonts/*",
+      "build/*",
+      "index.html",
+      "main.js",
+      "icon.ico",
+      "styles.css"
+    ]
   }
 }
