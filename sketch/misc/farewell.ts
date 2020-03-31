@@ -79,7 +79,7 @@ let farewellMessages: Message[] = [
       Thanks for all your time and help with SQL, SSRS, PowerBI.... well <span class='flashing'><em>everything!</em></span> You have been a great source of information and your input is always highly valued.
       <br/>
       <br/>
-      I ran of words and used them all on this with <span class='flashing'>Cahil</span> . 
+      I ran of out words and used them all on building this with <span class='flashing'>Cahil</span> . 
       <br/>
       <br/>
       Stay in touch and enjoy your game,
