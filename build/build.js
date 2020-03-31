@@ -232,7 +232,7 @@ class PlayerShip extends Ship {
         return this;
     }
 }
-function showGameOverMessage(font, score) {
+function showGameOverMessage(font, score, killedBy) {
     push();
     background(0, 150);
     fill(255);
@@ -244,6 +244,10 @@ function showGameOverMessage(font, score) {
     text('game over', windowWidth / 2, windowHeight / 2 - 75);
     textSize(50);
     text(`your score: ${score}`, windowWidth / 2, windowHeight / 2 + 50);
+    textSize(35);
+    textFont(regularFont);
+    strokeWeight(2);
+    text(`You were killed by: ${killedBy}`, windowWidth / 2, windowHeight / 2 + 125);
     pop();
 }
 function showNextRoundMessage(font, roundNumber, message, prefix) {
@@ -439,9 +443,6 @@ const levels = [
         waves: [[{ enemy: BossEnemy, count: 1 }]]
     },
     {
-        waves: [[{ enemy: BossEnemy, count: 10 }]]
-    },
-    {
         waves: [
             [
                 { enemy: SQLEnemy, count: 3 },
@@ -479,7 +480,10 @@ const levels = [
                 { enemy: SpotfireEnemy, count: 4 }
             ]
         ]
-    }
+    },
+    {
+        waves: [[{ enemy: BossEnemy, count: 10 }]]
+    },
 ];
 const messagePrefix = [
     'Captain',
@@ -495,6 +499,7 @@ let ship;
 let backgroundImage;
 let enemies;
 let gameOver;
+let killedBy;
 let nextRound;
 let victory;
 let farewellMessage;
@@ -573,7 +578,7 @@ function draw() {
         music.loop();
     }
     if (gameOver) {
-        showGameOverMessage(titleFont, score);
+        showGameOverMessage(titleFont, score, killedBy);
         buttons.retryButton.classList.remove('hidden');
         noLoop();
         return;
@@ -614,6 +619,7 @@ function draw() {
         if (enemy.checkBulletCollision(ship)) {
             explosionSound.play();
             gameOver = true;
+            killedBy = enemy.name;
         }
         newEnemies.push(enemy.update().draw());
     }
@@ -757,7 +763,7 @@ let farewellMessages = [
       Thanks for all your time and help with SQL, SSRS, PowerBI.... well <span class='flashing'><em>everything!</em></span> You have been a great source of information and your input is always highly valued.
       <br/>
       <br/>
-      I ran of words and used them all on this with <span class='flashing'>Cahil</span> . 
+      I ran of out words and used them all on building this with <span class='flashing'>Cahil</span> . 
       <br/>
       <br/>
       Stay in touch and enjoy your game,

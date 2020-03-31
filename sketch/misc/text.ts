@@ -1,4 +1,4 @@
-function showGameOverMessage(font: p5.Font, score: number) {
+function showGameOverMessage(font: p5.Font, score: number, killedBy: string) {
   push()
   background(0, 150)
   fill(255)
@@ -10,6 +10,14 @@ function showGameOverMessage(font: p5.Font, score: number) {
   text('game over', windowWidth / 2, windowHeight / 2 - 75)
   textSize(50)
   text(`your score: ${score}`, windowWidth / 2, windowHeight / 2 + 50)
+  textSize(35)
+  textFont(regularFont)
+  strokeWeight(2)
+  text(
+    `You were killed by: ${killedBy}`,
+    windowWidth / 2,
+    windowHeight / 2 + 125
+  )
   pop()
 }
 

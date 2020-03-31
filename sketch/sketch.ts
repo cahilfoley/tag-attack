@@ -8,6 +8,7 @@ let backgroundImage: p5.Image
 
 let enemies: Enemy[]
 let gameOver: boolean
+let killedBy: string
 let nextRound: boolean
 let victory: boolean
 let farewellMessage: Message
@@ -124,7 +125,7 @@ function draw() {
   }
 
   if (gameOver) {
-    showGameOverMessage(titleFont, score)
+    showGameOverMessage(titleFont, score, killedBy)
     buttons.retryButton.classList.remove('hidden')
     noLoop()
     return
@@ -176,6 +177,7 @@ function draw() {
     if (enemy.checkBulletCollision(ship)) {
       explosionSound.play()
       gameOver = true
+      killedBy = enemy.name
     }
 
     newEnemies.push(enemy.update().draw())
