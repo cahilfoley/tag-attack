@@ -48,60 +48,60 @@ const levels: RoundSettings[] = [
         { enemy: PowerBIEnemy, count: 2 }
       ]
     ]
+  },
+  {
+    waves: [
+      [
+        { enemy: SQLEnemy, count: 7 },
+        { enemy: PowerBIEnemy, count: 2 }
+      ]
+    ]
+  },
+  {
+    waves: [[{ enemy: BossEnemy, count: 1 }]]
+  },
+  {
+    waves: [[{ enemy: BossEnemy, count: 10 }]]
+  },
+  {
+    waves: [
+      [
+        { enemy: SQLEnemy, count: 3 },
+        { enemy: PowerBIEnemy, count: 2 },
+        { enemy: SSRSEnemy, count: 4 }
+      ],
+      [
+        { enemy: SSRSEnemy, count: 6 },
+        { enemy: SpotfireEnemy, count: 4 }
+      ]
+    ]
+  },
+  {
+    waves: [[{ enemy: BossEnemy, count: 2 }]]
+  },
+  {
+    waves: [
+      [
+        { enemy: SQLEnemy, count: 6 },
+        { enemy: PowerBIEnemy, count: 9 },
+        { enemy: SSRSEnemy, count: 5 },
+        { enemy: SpotfireEnemy, count: 4 }
+      ],
+      [
+        { enemy: SQLEnemy, count: 6 },
+        { enemy: PowerBIEnemy, count: 9 },
+        { enemy: SSRSEnemy, count: 5 },
+        { enemy: SpotfireEnemy, count: 4 }
+      ],
+      ,
+      [
+        { enemy: SQLEnemy, count: 6 },
+        { enemy: PowerBIEnemy, count: 9 },
+        { enemy: SSRSEnemy, count: 5 },
+        { enemy: SpotfireEnemy, count: 4 }
+      ]
+    ]
   }
-  // {
-  //   waves: [
-  //     [
-  //       { enemy: SQLEnemy, count: 7 },
-  //       { enemy: PowerBIEnemy, count: 2 }
-  //     ]
-  //   ]
-  // },
-  // {
-  //   waves: [[{ enemy: BossEnemy, count: 1 }]]
-  // },
-  // {
-  //   waves: [[{ enemy: BossEnemy, count: 10 }]]
-  // },
-  // {
-  //   waves: [
-  //     [
-  //       { enemy: SQLEnemy, count: 3 },
-  //       { enemy: PowerBIEnemy, count: 2 },
-  //       { enemy: SSRSEnemy, count: 4 }
-  //     ],
-  //     [
-  //       { enemy: SSRSEnemy, count: 6 },
-  //       { enemy: SpotfireEnemy, count: 4 }
-  //     ]
-  //   ]
-  // },
-  // {
-  //   waves: [[{ enemy: BossEnemy, count: 2 }]]
-  // },
-  // {
-  //   waves: [
-  //     [
-  //       { enemy: SQLEnemy, count: 6 },
-  //       { enemy: PowerBIEnemy, count: 9 },
-  //       { enemy: SSRSEnemy, count: 5 },
-  //       { enemy: SpotfireEnemy, count: 4 }
-  //     ],
-  //     [
-  //       { enemy: SQLEnemy, count: 6 },
-  //       { enemy: PowerBIEnemy, count: 9 },
-  //       { enemy: SSRSEnemy, count: 5 },
-  //       { enemy: SpotfireEnemy, count: 4 }
-  //     ],
-  //     ,
-  //     [
-  //       { enemy: SQLEnemy, count: 6 },
-  //       { enemy: PowerBIEnemy, count: 9 },
-  //       { enemy: SSRSEnemy, count: 5 },
-  //       { enemy: SpotfireEnemy, count: 4 }
-  //     ]
-  //   ]
-  // }
 ]
 
 const messagePrefix = [
