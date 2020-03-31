@@ -1,0 +1,114 @@
+@font-face {
+  font-family: 'Star Jedi';
+  src: url('fonts/StarJedi.woff2') format('woff2'),
+    url('fonts/StarJedi.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+.action-button {
+  font-family: 'Star Jedi';
+  font-weight: normal;
+  position: fixed;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+  background: none;
+  color: white;
+  border: none;
+  font-size: 42px;
+  z-index: 10;
+}
+
+#continue {
+  top: 95%;
+}
+
+#transmission {
+  flex: 0 0 auto;
+  margin: 8px 20px;
+  text-align: center;
+}
+
+#message {
+  background: lightgray;
+  flex: 1;
+  overflow-y: auto;
+  margin: 8px 20px 20px 20px;
+  padding: 16px;
+}
+
+#messageContainer {
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  white-space: normal;
+  font-family: 'Open Sans';
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%);
+  background: grey;
+  width: 50%;
+  height: 40%;
+  overflow-y: hidden;
+}
+
+#exit {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+#mute {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+#mute:not(.muted) ion-icon[name='volume-mute-outline'] {
+  display: none;
+}
+
+#mute.muted ion-icon[name='volume-high-outline'] {
+  display: none;
+}
+
+ion-icon {
+  font-size: 32px;
+  color: white;
+}
+
+button ion-icon {
+  cursor: pointer;
+}
+
+span.flashing {
+  font-family: 'Monoton', cursive;
+  -webkit-animation: h2 0.35s infinite;
+  animation: flashing 0.35s infinite;
+}
+
+@keyframes flashing {
+  0% {
+    text-shadow: 0 0 6px rgb(9, 97, 2);
+  }
+  100% {
+    text-shadow: 0 0 0px #000;
+  }
+}
+
+.hidden {
+  display: none !important;
+}

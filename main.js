@@ -3,8 +3,9 @@ const { app, BrowserWindow, Menu } = require('electron')
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1600,
-    height: 900,
+    fullscreen: true,
+    // width: 1920,
+    // height: 1080,
     webPreferences: {
       nodeIntegration: true
     }
@@ -14,6 +15,8 @@ function createWindow() {
 
   win.setMenu(null)
   win.setMenuBarVisibility(false)
+
+  // win.webContents.openDevTools()
 }
 
 app.whenReady().then(createWindow)

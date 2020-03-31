@@ -686,7 +686,13 @@ function setupButtons() {
         startRound(levels[roundNumber]);
         continueButton.classList.add('hidden');
     };
-    return { continueButton, muteButton, retryButton };
+    const exitButton = document.getElementById('exit');
+    exitButton.onclick = function () {
+        require('electron')
+            .remote.getCurrentWindow()
+            .close();
+    };
+    return { continueButton, exitButton, muteButton, retryButton };
 }
 let farewellMessages = [
     {
