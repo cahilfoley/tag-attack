@@ -6,7 +6,7 @@ class PlayerShip extends Ship {
   constructor(config: MoverConfig) {
     super({
       ...config,
-      spritePath: './images/fj.png',
+      spritePath: './images/player.png',
       bulletVelocity: createVector(0, -10),
       bulletsSpawnFrom: BulletSpawnPosition.TOP,
       bulletFont: titleFont,
