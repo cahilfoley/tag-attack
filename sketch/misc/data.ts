@@ -4,37 +4,32 @@
 /// <reference path="../actors/SQLEnemy.ts"/>
 /// <reference path="../actors/SpotfireEnemy.ts"/>
 
-const dbNames = [
-  'AMES.ODS',
-  'AMES_Conifg',
-  'UTIL_Alerts',
-  'UTIL_Baselines',
-  'UTIL_DownBoards',
-  'UTIL_Drills_Reporting',
-  'UTIL_Dumper_Analytics',
-  'UTIL_LiveReporting',
-  'UTIL_Mappings',
-  'UTIL_Misc',
-  'UTIL_Parameters',
-  'UTIL_Passport',
-  'UTIL_Plant_Reporting',
-  'UTIL_ProcessKeyedTables',
-  'UTIL_RAC',
-  'UTIL_Reclaimer_Analytics',
-  'UTIL_Reporting',
-  'UTIL_Reporting_Output',
-  'UTIL_SAP',
-  'UTIL_SiteInfo',
-  'UTIL_Targets',
-  'UTIL_Tyre_Metrics',
-  'RDEV'
+const yahavaCoffees = [
+  'Caffe Americano',
+  'Cafe Latte ',
+  'Cappuccino',
+  'Espresso',
+  'Flat White',
+  'Long Black', 
 ]
 
-const powerBIReports = ['Speed Dashboard', 'RAC', 'CU']
+const neroCoffees = [
+  'Macchiato',
+  'Piccolo Latte',
+  'Mochaccino',
+  'Vienna',
+  'Affogato',
+]
 
-const spotfireReports = ['Spotfire Tetris', 'Ports & TLO', 'Info Links']
+const dhCoffees = [
+  'Cafe Latte ',
+  'Cappuccino',
+  'Espresso',
+  'Vienna',
+  'Fancy Pants Drip Coffee'
+]
 
-const ssrsReports = ['HTT', 'Maximus', 'Truck Health']
+const mugCoffees = ['OC', 'LVL 17', 'Instant ']
 
 const enemyBullets = ['SELECT *', 'LOCK ON']
 
@@ -65,7 +60,7 @@ const levels: RoundSettings[] = [
       [
         { enemy: SQLEnemy, count: 3 },
         { enemy: PowerBIEnemy, count: 2 },
-        { enemy: SSRSEnemy, count: 4 }
+      { enemy: SSRSEnemy, count: 4 }
       ],
       [
         { enemy: SSRSEnemy, count: 6 },

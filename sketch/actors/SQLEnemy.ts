@@ -6,10 +6,10 @@ interface SQLEnemyProps {
 class SQLEnemy extends Enemy {
   constructor({ pos, vel }: SQLEnemyProps) {
     super({
-      name: random(dbNames),
+      name: random(yahavaCoffees),
       pos,
       vel: vel.mult(2),
-      spritePath: 'images/sql.png',
+      spritePath: 'images/yahava.png',
       hitPoints: 1,
       fireRate: 0.5,
       bulletsPerShot: 1,

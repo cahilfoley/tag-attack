@@ -6,10 +6,10 @@ interface SpotfireEnemyProps {
 class SpotfireEnemy extends Enemy {
   constructor({ pos, vel }: SpotfireEnemyProps) {
     super({
-      name: random(spotfireReports),
+      name: random(dhCoffees),
       pos,
       vel,
-      spritePath: 'images/tibco.png',
+      spritePath: 'images/dh.png',
       hitPoints: 2,
       fireRate: 0.5,
       bulletsPerShot: 1,

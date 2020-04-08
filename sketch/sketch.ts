@@ -38,7 +38,7 @@ function preload() {
   playerLaserSound = new p5.SoundFile('sounds/pew.wav')
   playerLaserSound.setVolume(0.3)
   explosionSound = new p5.SoundFile('sounds/boom.wav')
-  playerShip = loadImage('images/fj.png')
+  playerShip = loadImage('images/player.png')
   music = new p5.SoundFile('sounds/tetris-theme.mp3')
   music.setVolume(0.1)
   smallExplosion = new p5.SoundFile('sounds/small-explosion.wav')
@@ -88,7 +88,7 @@ function startRound(settings: RoundSettings) {
       enemies.push(
         new allEnemies[i]({
           pos: createVector(xPosition, -yPosition * random(0.8, 1.2) - 400),
-          name: random(dbNames),
+          name: random(yahavaCoffees),
           vel: createVector(random(-1, 1), random(0.5, 2)),
         })
       )

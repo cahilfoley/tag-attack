@@ -6,10 +6,10 @@ interface PowerBIEnemyProps {
 class PowerBIEnemy extends Enemy {
   constructor({ pos, vel }: PowerBIEnemyProps) {
     super({
-      name: random(powerBIReports),
+      name: random(neroCoffees),
       pos,
       vel,
-      spritePath: 'images/powerbi.png',
+      spritePath: 'images/nero.png',
       hitPoints: 2,
       fireRate: 0.5,
       bulletsPerShot: 1,

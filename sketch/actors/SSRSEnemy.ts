@@ -6,10 +6,10 @@ interface SSRSEnemyProps {
 class SSRSEnemy extends Enemy {
   constructor({ pos, vel }: SSRSEnemyProps) {
     super({
-      name: random(ssrsReports),
+      name: random(mugCoffees),
       pos,
       vel: vel.mult(2),
-      spritePath: 'images/ssrs.png',
+      spritePath: 'images/mug.png',
       hitPoints: 1,
       fireRate: 0.5,
       bulletsPerShot: 1,

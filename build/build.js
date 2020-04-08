@@ -210,7 +210,7 @@ class PlayerShip extends Ship {
     constructor(config) {
         super({
             ...config,
-            spritePath: './images/fj.png',
+            spritePath: './images/player.png',
             bulletVelocity: createVector(0, -10),
             bulletsSpawnFrom: 0,
             bulletFont: titleFont,
@@ -331,10 +331,10 @@ class BossEnemy extends Enemy {
 class PowerBIEnemy extends Enemy {
     constructor({ pos, vel }) {
         super({
-            name: random(powerBIReports),
+            name: random(neroCoffees),
             pos,
             vel,
-            spritePath: 'images/powerbi.png',
+            spritePath: 'images/nero.png',
             hitPoints: 2,
             fireRate: 0.5,
             bulletsPerShot: 1,
@@ -347,10 +347,10 @@ class PowerBIEnemy extends Enemy {
 class SSRSEnemy extends Enemy {
     constructor({ pos, vel }) {
         super({
-            name: random(ssrsReports),
+            name: random(mugCoffees),
             pos,
             vel: vel.mult(2),
-            spritePath: 'images/ssrs.png',
+            spritePath: 'images/mug.png',
             hitPoints: 1,
             fireRate: 0.5,
             bulletsPerShot: 1,
@@ -363,10 +363,10 @@ class SSRSEnemy extends Enemy {
 class SQLEnemy extends Enemy {
     constructor({ pos, vel }) {
         super({
-            name: random(dbNames),
+            name: random(yahavaCoffees),
             pos,
             vel: vel.mult(2),
-            spritePath: 'images/sql.png',
+            spritePath: 'images/yahava.png',
             hitPoints: 1,
             fireRate: 0.5,
             bulletsPerShot: 1,
@@ -379,10 +379,10 @@ class SQLEnemy extends Enemy {
 class SpotfireEnemy extends Enemy {
     constructor({ pos, vel }) {
         super({
-            name: random(spotfireReports),
+            name: random(dhCoffees),
             pos,
             vel,
-            spritePath: 'images/tibco.png',
+            spritePath: 'images/dh.png',
             hitPoints: 2,
             fireRate: 0.5,
             bulletsPerShot: 1,
@@ -392,34 +392,29 @@ class SpotfireEnemy extends Enemy {
         });
     }
 }
-const dbNames = [
-    'AMES.ODS',
-    'AMES_Conifg',
-    'UTIL_Alerts',
-    'UTIL_Baselines',
-    'UTIL_DownBoards',
-    'UTIL_Drills_Reporting',
-    'UTIL_Dumper_Analytics',
-    'UTIL_LiveReporting',
-    'UTIL_Mappings',
-    'UTIL_Misc',
-    'UTIL_Parameters',
-    'UTIL_Passport',
-    'UTIL_Plant_Reporting',
-    'UTIL_ProcessKeyedTables',
-    'UTIL_RAC',
-    'UTIL_Reclaimer_Analytics',
-    'UTIL_Reporting',
-    'UTIL_Reporting_Output',
-    'UTIL_SAP',
-    'UTIL_SiteInfo',
-    'UTIL_Targets',
-    'UTIL_Tyre_Metrics',
-    'RDEV'
+const yahavaCoffees = [
+    'Caffe Americano',
+    'Cafe Latte ',
+    'Cappuccino',
+    'Espresso',
+    'Flat White',
+    'Long Black',
 ];
-const powerBIReports = ['Speed Dashboard', 'RAC', 'CU'];
-const spotfireReports = ['Spotfire Tetris', 'Ports & TLO', 'Info Links'];
-const ssrsReports = ['HTT', 'Maximus', 'Truck Health'];
+const neroCoffees = [
+    'Macchiato',
+    'Piccolo Latte',
+    'Mochaccino',
+    'Vienna',
+    'Affogato',
+];
+const dhCoffees = [
+    'Cafe Latte ',
+    'Cappuccino',
+    'Espresso',
+    'Vienna',
+    'Fancy Pants Drip Coffee'
+];
+const mugCoffees = ['OC', 'LVL 17', 'Instant '];
 const enemyBullets = ['SELECT *', 'LOCK ON'];
 const playerBullets = ['truncate', 'drop', 'restart', 'ssis'];
 const levels = [
@@ -525,7 +520,7 @@ function preload() {
     playerLaserSound = new p5.SoundFile('sounds/pew.wav');
     playerLaserSound.setVolume(0.3);
     explosionSound = new p5.SoundFile('sounds/boom.wav');
-    playerShip = loadImage('images/fj.png');
+    playerShip = loadImage('images/player.png');
     music = new p5.SoundFile('sounds/tetris-theme.mp3');
     music.setVolume(0.1);
     smallExplosion = new p5.SoundFile('sounds/small-explosion.wav');
@@ -548,7 +543,7 @@ function startRound(settings) {
             let yPosition = ySpacing * waveNumber * 10;
             enemies.push(new allEnemies[i]({
                 pos: createVector(xPosition, -yPosition * random(0.8, 1.2) - 400),
-                name: random(dbNames),
+                name: random(yahavaCoffees),
                 vel: createVector(random(-1, 1), random(0.5, 2)),
             }));
         }
