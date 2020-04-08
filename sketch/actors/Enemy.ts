@@ -6,7 +6,7 @@ interface EnemyConfig extends MoverConfig {
   bulletsPerShot: number
   hitPoints: number
   fireRate: number
-  spritePath: string
+  sprite: p5.Image
 }
 
 class Enemy extends Ship {
@@ -16,15 +16,13 @@ class Enemy extends Ship {
   score: number
   fireRate: number
 
-  constructor({ name, score, fireRate, spritePath, ...config }: EnemyConfig) {
+  constructor({ name, score, fireRate, sprite, ...config }: EnemyConfig) {
     super({
       ...config,
-      spritePath,
+      sprite,
       bulletVelocity: createVector(0, 10),
       bulletsSpawnFrom: BulletSpawnPosition.BOTTOM,
-      bulletFont: regularFont,
-      bulletTextOptions: enemyBullets,
-      customLaserSound: laserSound
+      customLaserSound: laserSound,
     })
 
     this.name = name
@@ -76,6 +74,17 @@ class Enemy extends Ship {
     textFont(regularFont)
     fill(255)
     text(this.name.toUpperCase(), this.left + this.width / 2, this.bottom + 16)
+
+    const sectionWidth = this.width / this.maxHitPoints
+    const healthPercentage = this.hitPoints / this.maxHitPoints
+    if (healthPercentage > 0.5) {
+      fill(100, 255, 100, 150)
+    } else {
+      fill(255, 0, 0, 150)
+    }
+    for (let i = 0; i < this.hitPoints; i++) {
+      rect(this.left + sectionWidth * i, this.top - 10, sectionWidth - 2, 4)
+    }
 
     return this
   }

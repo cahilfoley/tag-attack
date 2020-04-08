@@ -22,6 +22,7 @@ class Ship extends SpriteMover {
   protected bulletsSpawnFrom: BulletSpawnPosition
   bulletsPerShot: number
   hitPoints: number
+  maxHitPoints: number
   damage = 1
 
   laserSound: p5.SoundFile
@@ -41,6 +42,7 @@ class Ship extends SpriteMover {
     this.bulletsSpawnFrom = bulletsSpawnFrom
     this.bulletsPerShot = bulletsPerShot
     this.hitPoints = hitPoints
+    this.maxHitPoints = hitPoints
     this.laserSound = customLaserSound
   }
 
