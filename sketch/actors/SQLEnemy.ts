@@ -9,13 +9,13 @@ class SQLEnemy extends Enemy {
       name: random(yahavaCoffees),
       pos,
       vel: vel.mult(2),
-      spritePath: 'images/yahava.png',
+      sprite: enemyImage.yahava,
       hitPoints: 1,
       fireRate: 0.5,
       bulletsPerShot: 1,
       score: 100,
       height: 50,
-      width: 50
+      width: 50,
     })
   }
 }

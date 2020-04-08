@@ -9,13 +9,13 @@ class PowerBIEnemy extends Enemy {
       name: random(neroCoffees),
       pos,
       vel,
-      spritePath: 'images/nero.png',
+      sprite: enemyImage.nero,
       hitPoints: 2,
       fireRate: 0.5,
       bulletsPerShot: 1,
       score: 200,
       height: 50,
-      width: 50
+      width: 50,
     })
   }
 }

@@ -9,14 +9,13 @@ class BossEnemy extends Enemy {
       name: 'Tinfoil Kid',
       pos,
       vel: vel.mult(2),
-      spritePath: 'images/steves-head.png',
-
+      sprite: enemyImage.steve,
       hitPoints: 15,
       fireRate: 1,
       bulletsPerShot: 5,
       score: 800,
       height: 250,
-      width: 250
+      width: 250,
     })
   }
 

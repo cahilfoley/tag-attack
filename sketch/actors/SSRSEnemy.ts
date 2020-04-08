@@ -9,13 +9,13 @@ class SSRSEnemy extends Enemy {
       name: random(mugCoffees),
       pos,
       vel: vel.mult(2),
-      spritePath: 'images/mug.png',
+      sprite: enemyImage.mug,
       hitPoints: 1,
       fireRate: 0.5,
       bulletsPerShot: 1,
       score: 100,
       height: 50,
-      width: 50
+      width: 50,
     })
   }
 }

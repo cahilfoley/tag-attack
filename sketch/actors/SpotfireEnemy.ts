@@ -9,13 +9,13 @@ class SpotfireEnemy extends Enemy {
       name: random(dhCoffees),
       pos,
       vel,
-      spritePath: 'images/dh.png',
+      sprite: enemyImage.dh,
       hitPoints: 2,
       fireRate: 0.5,
       bulletsPerShot: 1,
       score: 150,
       height: 50,
-      width: 50
+      width: 50,
     })
   }
 }

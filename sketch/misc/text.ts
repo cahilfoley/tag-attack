@@ -59,7 +59,7 @@ function showGameTitle(font: p5.Font) {
   textFont(font)
   textSize(80)
   textStyle(BOLD)
-  text(`fj's data blaster`, windowWidth / 2, 50)
+  text(`ayesha's coffee shot`, windowWidth / 2, 50)
   pop()
 }
 

@@ -3,27 +3,15 @@ function setupButtons() {
 
   let muted = false
 
-  muteButton.onclick = function(event) {
-    if (muted) {
-      music.setVolume(0.1)
-      explosionSound.setVolume(1)
-      laserSound.setVolume(0.4)
-      playerLaserSound.setVolume(0.6)
-      muted = false
-      muteButton.classList.remove('muted')
-    } else {
-      music.setVolume(0)
-      explosionSound.setVolume(0)
-      laserSound.setVolume(0)
-      playerLaserSound.setVolume(0)
-      muted = true
-      muteButton.classList.add('muted')
-    }
+  muteButton.onclick = function (event) {
+    muted = !muted
+    sounds.forEach((sound) => sound.file.setVolume(muted ? 0 : sound.volume))
+    muteButton.classList[muted ? 'add' : 'remove']('muted')
   }
 
   const retryButton = document.getElementById('retry')
 
-  retryButton.onclick = function(event) {
+  retryButton.onclick = function (event) {
     setup()
     loop()
     retryButton.classList.add('hidden')
@@ -31,17 +19,15 @@ function setupButtons() {
 
   const continueButton = document.getElementById('continue')
 
-  continueButton.onclick = function(event) {
+  continueButton.onclick = function (event) {
     startRound(levels[roundNumber])
     continueButton.classList.add('hidden')
   }
 
   const exitButton = document.getElementById('exit')
 
-  exitButton.onclick = function() {
-    require('electron')
-      .remote.getCurrentWindow()
-      .close()
+  exitButton.onclick = function () {
+    require('electron').remote.getCurrentWindow().close()
   }
 
   return { continueButton, exitButton, muteButton, retryButton }

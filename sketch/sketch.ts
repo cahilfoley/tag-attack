@@ -23,30 +23,60 @@ let smallExplosion: p5.SoundFile
 let bossExplosion: p5.SoundFile
 let enemyShip: p5.Image
 let playerShip: p5.Image
+let playerShipShooting: p5.Image
 let music: p5.SoundFile
+let enemyImage: Record<string, p5.Image>
 let tetrisImages: p5.Image[]
+
+interface Sound {
+  file: p5.SoundFile
+  volume: number
+}
+
+let sounds: Sound[]
 
 let score: number
 
 let buttons: ReturnType<typeof setupButtons>
 
 function preload() {
+  // Images
+  enemyImage = {
+    dh: loadImage('images/dh.png'),
+    nero: loadImage('images/nero.png'),
+    mug: loadImage('images/mug.png'),
+    yahava: loadImage('images/yahava.png'),
+    steve: loadImage('images/steves-head.png'),
+  }
+  playerShip = loadImage('images/player.png')
+  playerShipShooting = loadImage('images/player-shooting.png')
   backgroundImage = loadImage('images/background.jpg')
   tetrisImages = Array.from({ length: 7 }).map((_, i) =>
     loadImage(`images/tetris-${i}.png`)
   )
+
+  // Fonts
   titleFont = loadFont('fonts/StarJedi.ttf')
   regularFont = loadFont('fonts/OpenSans-Regular.ttf')
+
+  // Sounds
   laserSound = new p5.SoundFile('sounds/laser.wav')
-  laserSound.setVolume(0.3)
   playerLaserSound = new p5.SoundFile('sounds/pew.wav')
-  playerLaserSound.setVolume(0.3)
   explosionSound = new p5.SoundFile('sounds/boom.wav')
-  playerShip = loadImage('images/player.png')
   music = new p5.SoundFile('sounds/tetris-theme.mp3')
-  music.setVolume(0.1)
   smallExplosion = new p5.SoundFile('sounds/small-explosion.wav')
   bossExplosion = new p5.SoundFile('sounds/boss-explosion.wav')
+
+  sounds = [
+    { file: laserSound, volume: 0.3 },
+    { file: playerLaserSound, volume: 0.3 },
+    { file: explosionSound, volume: 1 },
+    { file: music, volume: 0.1 },
+    { file: smallExplosion, volume: 1 },
+    { file: bossExplosion, volume: 1 },
+  ]
+
+  sounds.forEach((sound) => sound.file.setVolume(sound.volume))
 }
 
 interface EnemyConstructor {
@@ -165,6 +195,8 @@ function draw() {
   const newEnemies: Enemy[] = []
 
   for (const enemy of enemies) {
+    enemy.update().draw()
+
     if (!enemy.active) continue
 
     const collision = ship.checkBulletCollision(enemy)
@@ -186,7 +218,7 @@ function draw() {
       killedBy = enemy.name
     }
 
-    newEnemies.push(enemy.update().draw())
+    newEnemies.push(enemy)
   }
 
   if (newEnemies.length === 0) {
