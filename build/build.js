@@ -88,7 +88,9 @@ var BulletSpawnPosition;
 class Ship extends SpriteMover {
     constructor({ bulletVelocity, bulletsSpawnFrom, bulletsPerShot, hitPoints, customLaserSound = laserSound, ...config }) {
         super(config);
+        this.upForce = createVector(0, -0.4);
         this.leftForce = createVector(-0.4, 0);
+        this.downForce = createVector(0, 0.4);
         this.rightForce = createVector(0.4, 0);
         this.damage = 1;
         this.bullets = [];
@@ -99,8 +101,14 @@ class Ship extends SpriteMover {
         this.maxHitPoints = hitPoints;
         this.laserSound = customLaserSound;
     }
+    moveUp() {
+        return this.applyForce(this.upForce);
+    }
     moveLeft() {
         return this.applyForce(this.leftForce);
+    }
+    moveDown() {
+        return this.applyForce(this.downForce);
     }
     moveRight() {
         return this.applyForce(this.rightForce);
@@ -232,8 +240,12 @@ class PlayerShip extends Ship {
         super.move();
         this.vel.mult(1 - this.dragForce);
         if (this.left < 0 || this.right > windowWidth) {
-            this.vel.mult(-1);
-            this.pos.add(this.vel);
+            this.vel.x = -this.vel.x;
+            this.pos.x += this.vel.x;
+        }
+        if (this.top < 0 || this.bottom > windowHeight) {
+            this.vel.y = -this.vel.y;
+            this.pos.y += this.vel.y;
         }
         return this;
     }
@@ -627,8 +639,12 @@ function draw() {
     showScore(titleFont, score);
     if (keyIsDown(LEFT_ARROW))
         ship.moveLeft();
+    if (keyIsDown(UP_ARROW))
+        ship.moveUp();
     if (keyIsDown(RIGHT_ARROW))
         ship.moveRight();
+    if (keyIsDown(DOWN_ARROW))
+        ship.moveDown();
     ship.update().draw();
     const newEnemies = [];
     for (const enemy of enemies) {

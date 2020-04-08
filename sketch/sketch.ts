@@ -188,7 +188,9 @@ function draw() {
   showScore(titleFont, score)
 
   if (keyIsDown(LEFT_ARROW)) ship.moveLeft()
+  if (keyIsDown(UP_ARROW)) ship.moveUp()
   if (keyIsDown(RIGHT_ARROW)) ship.moveRight()
+  if (keyIsDown(DOWN_ARROW)) ship.moveDown()
 
   ship.update().draw()
 

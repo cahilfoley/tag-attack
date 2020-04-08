@@ -15,7 +15,9 @@ interface ShipConfig extends SpriteMoverConfig {
 }
 
 class Ship extends SpriteMover {
+  private upForce = createVector(0, -0.4)
   private leftForce = createVector(-0.4, 0)
+  private downForce = createVector(0, 0.4)
   private rightForce = createVector(0.4, 0)
 
   protected bulletVelocity: p5.Vector
@@ -45,9 +47,16 @@ class Ship extends SpriteMover {
     this.maxHitPoints = hitPoints
     this.laserSound = customLaserSound
   }
+  moveUp() {
+    return this.applyForce(this.upForce)
+  }
 
   moveLeft() {
     return this.applyForce(this.leftForce)
+  }
+
+  moveDown() {
+    return this.applyForce(this.downForce)
   }
 
   moveRight() {

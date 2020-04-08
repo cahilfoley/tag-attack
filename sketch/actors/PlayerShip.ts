@@ -33,8 +33,13 @@ class PlayerShip extends Ship {
 
     // Bounce off the edges
     if (this.left < 0 || this.right > windowWidth) {
-      this.vel.mult(-1)
-      this.pos.add(this.vel)
+      this.vel.x = -this.vel.x
+      this.pos.x += this.vel.x
+    }
+
+    if (this.top < 0 || this.bottom > windowHeight) {
+      this.vel.y = -this.vel.y
+      this.pos.y += this.vel.y
     }
 
     return this
