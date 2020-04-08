@@ -10,7 +10,7 @@ const yahavaCoffees = [
   'Cappuccino',
   'Espresso',
   'Flat White',
-  'Long Black', 
+  'Long Black',
 ]
 
 const neroCoffees = [
@@ -26,50 +26,46 @@ const dhCoffees = [
   'Cappuccino',
   'Espresso',
   'Vienna',
-  'Fancy Pants Drip Coffee'
+  'Fancy Pants Drip Coffee',
 ]
 
 const mugCoffees = ['OC', 'LVL 17', 'Instant ']
-
-const enemyBullets = ['SELECT *', 'LOCK ON']
-
-const playerBullets = ['truncate', 'drop', 'restart', 'ssis']
 
 const levels: RoundSettings[] = [
   {
     waves: [
       [
         { enemy: SQLEnemy, count: 3 },
-        { enemy: PowerBIEnemy, count: 2 }
-      ]
-    ]
+        { enemy: PowerBIEnemy, count: 2 },
+      ],
+    ],
   },
   {
     waves: [
       [
         { enemy: SQLEnemy, count: 7 },
-        { enemy: PowerBIEnemy, count: 2 }
-      ]
-    ]
+        { enemy: PowerBIEnemy, count: 2 },
+      ],
+    ],
   },
   {
-    waves: [[{ enemy: BossEnemy, count: 1 }]]
+    waves: [[{ enemy: BossEnemy, count: 1 }]],
   },
   {
     waves: [
       [
         { enemy: SQLEnemy, count: 3 },
         { enemy: PowerBIEnemy, count: 2 },
-      { enemy: SSRSEnemy, count: 4 }
+        { enemy: SSRSEnemy, count: 4 },
       ],
       [
         { enemy: SSRSEnemy, count: 6 },
-        { enemy: SpotfireEnemy, count: 4 }
-      ]
-    ]
+        { enemy: SpotfireEnemy, count: 4 },
+      ],
+    ],
   },
   {
-    waves: [[{ enemy: BossEnemy, count: 2 }]]
+    waves: [[{ enemy: BossEnemy, count: 2 }]],
   },
   {
     waves: [
@@ -77,25 +73,25 @@ const levels: RoundSettings[] = [
         { enemy: SQLEnemy, count: 6 },
         { enemy: PowerBIEnemy, count: 9 },
         { enemy: SSRSEnemy, count: 5 },
-        { enemy: SpotfireEnemy, count: 4 }
+        { enemy: SpotfireEnemy, count: 4 },
       ],
       [
         { enemy: SQLEnemy, count: 6 },
         { enemy: PowerBIEnemy, count: 9 },
         { enemy: SSRSEnemy, count: 5 },
-        { enemy: SpotfireEnemy, count: 4 }
+        { enemy: SpotfireEnemy, count: 4 },
       ],
       [
         { enemy: SQLEnemy, count: 6 },
         { enemy: PowerBIEnemy, count: 9 },
         { enemy: SSRSEnemy, count: 5 },
-        { enemy: SpotfireEnemy, count: 4 }
-      ]
-    ]
-  },  
+        { enemy: SpotfireEnemy, count: 4 },
+      ],
+    ],
+  },
   {
-    waves: [[{ enemy: BossEnemy, count: 10 }]]
-  }
+    waves: [[{ enemy: BossEnemy, count: 10 }]],
+  },
 ]
 
 const messagePrefix = [
@@ -104,7 +100,7 @@ const messagePrefix = [
   'Weapons Specalist',
   'Major Sergeant General',
   'Ultimate Mega Badass',
-  'Supreme Commander'
+  'Supreme Commander',
 ]
 
 const chrisList = ['Just', 'Plain', 'Space Cadet', 'Noob', 'Very Naughty Boy']

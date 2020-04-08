@@ -24,6 +24,7 @@ let bossExplosion: p5.SoundFile
 let enemyShip: p5.Image
 let playerShip: p5.Image
 let music: p5.SoundFile
+let tetrisImages: p5.Image[]
 
 let score: number
 
@@ -31,6 +32,9 @@ let buttons: ReturnType<typeof setupButtons>
 
 function preload() {
   backgroundImage = loadImage('images/background.jpg')
+  tetrisImages = Array.from({ length: 7 }).map((_, i) =>
+    loadImage(`images/tetris-${i}.png`)
+  )
   titleFont = loadFont('fonts/StarJedi.ttf')
   regularFont = loadFont('fonts/OpenSans-Regular.ttf')
   laserSound = new p5.SoundFile('sounds/laser.wav')
@@ -102,7 +106,7 @@ function setup() {
   textAlign(CENTER, CENTER)
 
   createCanvas(windowWidth, windowHeight)
-  rectMode(CENTER)
+  rectMode(CORNER)
 
   gameOver = false
 

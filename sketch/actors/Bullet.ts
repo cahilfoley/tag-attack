@@ -1,18 +1,12 @@
 /// <reference path="../base/SpriteMover.ts"/>
 
-interface BulletConfig extends MoverConfig {
-  font: p5.Font
-  text: string
-}
-
 class Bullet extends SpriteMover {
-  protected font: p5.Font
-  text: string
+  private static getSpriteImage() {
+    return random(tetrisImages)
+  }
 
-  constructor({ font, text, ...config }: BulletConfig) {
-    super({ ...config, spritePath: './images/bullet.png' })
-    this.font = font
-    this.text = text
+  constructor(config: MoverConfig) {
+    super({ ...config, sprite: Bullet.getSpriteImage() })
   }
 
   /** Flag bullets for deletion after moving off screen */
@@ -28,15 +22,13 @@ class Bullet extends SpriteMover {
 
   draw() {
     push()
+
     translate(this.pos.x, this.pos.y)
     rotate(this.vel.heading())
+    rotate(PI / 2)
+    super.draw({ x: 0, y: 0 })
 
-    fill(255)
-    textFont(this.font)
-    textSize(16)
-    text(this.text, 0, 0)
     pop()
-
     return this
   }
 }

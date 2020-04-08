@@ -51,8 +51,8 @@ abstract class Mover {
 
   checkCollision(object: Mover) {
     return (
-      object.right > this.left &&
-      object.left < this.right &&
+      object.right > this.left + 10 &&
+      object.left < this.right - 10 &&
       object.bottom > this.top &&
       object.top < this.bottom
     )

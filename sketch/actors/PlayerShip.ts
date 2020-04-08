@@ -6,14 +6,12 @@ class PlayerShip extends Ship {
   constructor(config: MoverConfig) {
     super({
       ...config,
-      spritePath: './images/player.png',
+      sprite: playerShip,
       bulletVelocity: createVector(0, -10),
       bulletsSpawnFrom: BulletSpawnPosition.TOP,
-      bulletFont: titleFont,
-      bulletTextOptions: playerBullets,
       customLaserSound: playerLaserSound,
       bulletsPerShot: 1,
-      hitPoints: 1
+      hitPoints: 1,
     })
 
     this.vel.limit(1)

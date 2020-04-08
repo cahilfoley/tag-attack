@@ -3,14 +3,12 @@
 
 const enum BulletSpawnPosition {
   TOP,
-  BOTTOM
+  BOTTOM,
 }
 
 interface ShipConfig extends SpriteMoverConfig {
   bulletVelocity: p5.Vector
   bulletsSpawnFrom: BulletSpawnPosition
-  bulletTextOptions: string[]
-  bulletFont: p5.Font
   bulletsPerShot: number
   hitPoints: number
   customLaserSound: p5.SoundFile
@@ -22,8 +20,6 @@ class Ship extends SpriteMover {
 
   protected bulletVelocity: p5.Vector
   protected bulletsSpawnFrom: BulletSpawnPosition
-  protected bulletTextOptions: string[]
-  protected bulletFont: p5.Font
   bulletsPerShot: number
   hitPoints: number
   damage = 1
@@ -33,8 +29,6 @@ class Ship extends SpriteMover {
   bullets: Bullet[] = []
 
   constructor({
-    bulletFont,
-    bulletTextOptions,
     bulletVelocity,
     bulletsSpawnFrom,
     bulletsPerShot,
@@ -45,8 +39,6 @@ class Ship extends SpriteMover {
     super(config)
     this.bulletVelocity = bulletVelocity
     this.bulletsSpawnFrom = bulletsSpawnFrom
-    this.bulletFont = bulletFont
-    this.bulletTextOptions = bulletTextOptions
     this.bulletsPerShot = bulletsPerShot
     this.hitPoints = hitPoints
     this.laserSound = customLaserSound
@@ -63,21 +55,15 @@ class Ship extends SpriteMover {
   update() {
     super.update()
 
-    this.bullets = this.bullets.filter(x => x.active).map(x => x.update())
+    this.bullets = this.bullets.filter((x) => x.active).map((x) => x.update())
 
     return this
   }
 
-  draw() {
-    super.draw()
-    // rectMode(CORNER)
-    // stroke(255, 100, 100)
-    // noFill()
-    // rect(this.pos.x, this.pos.y, this.width, this.height)
+  draw(...args: any[]) {
+    super.draw(...args)
 
-    this.bullets.forEach((x, i) => {
-      x.draw()
-    })
+    this.bullets.forEach((x) => x.draw())
 
     return this
   }
@@ -86,7 +72,6 @@ class Ship extends SpriteMover {
     if (!this.isOffScreen) {
       this.laserSound.play()
     }
-    const bulletText = random(this.bulletTextOptions)
     let radiusPerShot = HALF_PI / (this.bulletsPerShot - 1)
     push()
 
@@ -105,10 +90,8 @@ class Ship extends SpriteMover {
       const bullet = new Bullet({
         pos: bulletPosition,
         vel: bulletVelocity,
-        height: 15,
-        width: 5,
-        text: bulletText,
-        font: this.bulletFont
+        height: 40,
+        width: 20,
       })
 
       this.bullets.push(bullet)
@@ -117,6 +100,6 @@ class Ship extends SpriteMover {
   }
 
   checkBulletCollision(object: Mover) {
-    return this.bullets.find(bullet => object.checkCollision(bullet))
+    return this.bullets.find((bullet) => object.checkCollision(bullet))
   }
 }
