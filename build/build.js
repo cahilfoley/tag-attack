@@ -472,7 +472,6 @@ const levels = [
                 { enemy: SSRSEnemy, count: 5 },
                 { enemy: SpotfireEnemy, count: 4 }
             ],
-            ,
             [
                 { enemy: SQLEnemy, count: 6 },
                 { enemy: PowerBIEnemy, count: 9 },
@@ -483,7 +482,7 @@ const levels = [
     },
     {
         waves: [[{ enemy: BossEnemy, count: 10 }]]
-    },
+    }
 ];
 const messagePrefix = [
     'Captain',
@@ -518,7 +517,7 @@ let music;
 let score;
 let buttons;
 function preload() {
-    backgroundImage = loadImage('images/background.png');
+    backgroundImage = loadImage('images/background.jpg');
     titleFont = loadFont('fonts/StarJedi.ttf');
     regularFont = loadFont('fonts/OpenSans-Regular.ttf');
     laserSound = new p5.SoundFile('sounds/laser.wav');
@@ -527,7 +526,8 @@ function preload() {
     playerLaserSound.setVolume(0.3);
     explosionSound = new p5.SoundFile('sounds/boom.wav');
     playerShip = loadImage('images/fj.png');
-    music = new p5.SoundFile('sounds/midnight-chase.mp3');
+    music = new p5.SoundFile('sounds/tetris-theme.mp3');
+    music.setVolume(0.1);
     smallExplosion = new p5.SoundFile('sounds/small-explosion.wav');
     bossExplosion = new p5.SoundFile('sounds/boss-explosion.wav');
 }
@@ -542,14 +542,14 @@ function startRound(settings) {
         const wave = settings.waves[waveNumber];
         const xSpacing = (windowWidth - xPadding * 2) /
             wave.reduce((total, waveEnemy) => total + waveEnemy.count, 0);
-        const allEnemies = shuffle(wave.flatMap(enemyType => Array.from({ length: enemyType.count }).map((_, i) => enemyType.enemy)));
+        const allEnemies = shuffle(wave.flatMap((enemyType) => Array.from({ length: enemyType.count }).map((_, i) => enemyType.enemy)));
         for (let i = 0; i < allEnemies.length; i++) {
             let xPosition = xSpacing * i + xPadding;
             let yPosition = ySpacing * waveNumber * 10;
             enemies.push(new allEnemies[i]({
                 pos: createVector(xPosition, -yPosition * random(0.8, 1.2) - 400),
                 name: random(dbNames),
-                vel: createVector(random(-1, 1), random(0.5, 2))
+                vel: createVector(random(-1, 1), random(0.5, 2)),
             }));
         }
     }
@@ -564,7 +564,7 @@ function setup() {
     ship = new PlayerShip({
         pos: createVector(windowWidth / 2, windowHeight - 140),
         height: 120,
-        width: 85
+        width: 85,
     });
     score = 0;
     roundNumber = 0;
@@ -595,6 +595,7 @@ function draw() {
         }
     }
     background(backgroundImage);
+    background(0, 150);
     showGameTitle(titleFont);
     showScore(titleFont, score);
     if (keyIsDown(LEFT_ARROW))
@@ -608,7 +609,7 @@ function draw() {
             continue;
         const collision = ship.checkBulletCollision(enemy);
         if (collision) {
-            ship.bullets = ship.bullets.filter(x => x !== collision);
+            ship.bullets = ship.bullets.filter((x) => x !== collision);
             enemy.hitPoints -= ship.damage;
             if (enemy.hitPoints <= 0) {
                 score += enemy.score;

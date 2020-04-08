@@ -1,5 +1,5 @@
 {
-  "name": "database-blaster",
+  "name": "coffee-shots",
   "version": "1.0.0",
   "main": "main.js",
   "author": {
@@ -27,14 +27,14 @@
   },
   "build": {
     "appId": "database.blaster",
-    "productName": "FJ's Database Blaster",
+    "productName": "Ayesha's Coffee Shots",
     "win": {
       "target": [
         "portable"
       ]
     },
     "portable": {
-      "artifactName": "FJs Data Blaster.exe"
+      "artifactName": "Ayesha's Coffee Shots.exe"
     },
     "directories": {
       "output": "dist/output",

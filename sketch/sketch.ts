@@ -30,7 +30,7 @@ let score: number
 let buttons: ReturnType<typeof setupButtons>
 
 function preload() {
-  backgroundImage = loadImage('images/background.png')
+  backgroundImage = loadImage('images/background.jpg')
   titleFont = loadFont('fonts/StarJedi.ttf')
   regularFont = loadFont('fonts/OpenSans-Regular.ttf')
   laserSound = new p5.SoundFile('sounds/laser.wav')
@@ -39,7 +39,8 @@ function preload() {
   playerLaserSound.setVolume(0.3)
   explosionSound = new p5.SoundFile('sounds/boom.wav')
   playerShip = loadImage('images/fj.png')
-  music = new p5.SoundFile('sounds/midnight-chase.mp3')
+  music = new p5.SoundFile('sounds/tetris-theme.mp3')
+  music.setVolume(0.1)
   smallExplosion = new p5.SoundFile('sounds/small-explosion.wav')
   bossExplosion = new p5.SoundFile('sounds/boss-explosion.wav')
 }
@@ -76,7 +77,7 @@ function startRound(settings: RoundSettings) {
       wave.reduce((total, waveEnemy) => total + waveEnemy.count, 0)
 
     const allEnemies = shuffle(
-      wave.flatMap(enemyType =>
+      wave.flatMap((enemyType) =>
         Array.from({ length: enemyType.count }).map((_, i) => enemyType.enemy)
       )
     )
@@ -88,7 +89,7 @@ function startRound(settings: RoundSettings) {
         new allEnemies[i]({
           pos: createVector(xPosition, -yPosition * random(0.8, 1.2) - 400),
           name: random(dbNames),
-          vel: createVector(random(-1, 1), random(0.5, 2))
+          vel: createVector(random(-1, 1), random(0.5, 2)),
         })
       )
     }
@@ -108,7 +109,7 @@ function setup() {
   ship = new PlayerShip({
     pos: createVector(windowWidth / 2, windowHeight - 140),
     height: 120,
-    width: 85
+    width: 85,
   })
 
   score = 0
@@ -148,6 +149,7 @@ function draw() {
   }
 
   background(backgroundImage)
+  background(0, 150)
   showGameTitle(titleFont)
   showScore(titleFont, score)
 
@@ -163,7 +165,7 @@ function draw() {
 
     const collision = ship.checkBulletCollision(enemy)
     if (collision) {
-      ship.bullets = ship.bullets.filter(x => x !== collision)
+      ship.bullets = ship.bullets.filter((x) => x !== collision)
       enemy.hitPoints -= ship.damage
 
       if (enemy.hitPoints <= 0) {
