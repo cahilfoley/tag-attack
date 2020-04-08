@@ -26,8 +26,8 @@ class Mover {
         return this.top + this.height;
     }
     checkCollision(object) {
-        return (object.right > this.left &&
-            object.left < this.right &&
+        return (object.right > this.left + 10 &&
+            object.left < this.right - 10 &&
             object.bottom > this.top &&
             object.top < this.bottom);
     }
@@ -47,20 +47,21 @@ class Mover {
     }
 }
 class SpriteMover extends Mover {
-    constructor({ spritePath, ...config }) {
+    constructor({ spritePath, sprite, ...config }) {
         super(config);
-        this.sprite = loadImage(spritePath);
+        this.sprite = sprite || (spritePath && loadImage(spritePath));
     }
-    draw() {
-        image(this.sprite, this.pos.x, this.pos.y, this.width, this.height);
+    draw({ x = this.pos.x, y = this.pos.y, sprite = this.sprite } = {}) {
+        image(sprite, x, y, this.width, this.height);
         return this;
     }
 }
 class Bullet extends SpriteMover {
-    constructor({ font, text, ...config }) {
-        super({ ...config, spritePath: './images/bullet.png' });
-        this.font = font;
-        this.text = text;
+    static getSpriteImage() {
+        return random(tetrisImages);
+    }
+    constructor(config) {
+        super({ ...config, sprite: Bullet.getSpriteImage() });
     }
     move() {
         super.move();
@@ -73,10 +74,8 @@ class Bullet extends SpriteMover {
         push();
         translate(this.pos.x, this.pos.y);
         rotate(this.vel.heading());
-        fill(255);
-        textFont(this.font);
-        textSize(16);
-        text(this.text, 0, 0);
+        rotate(PI / 2);
+        super.draw({ x: 0, y: 0 });
         pop();
         return this;
     }
@@ -87,7 +86,7 @@ var BulletSpawnPosition;
     BulletSpawnPosition[BulletSpawnPosition["BOTTOM"] = 1] = "BOTTOM";
 })(BulletSpawnPosition || (BulletSpawnPosition = {}));
 class Ship extends SpriteMover {
-    constructor({ bulletFont, bulletTextOptions, bulletVelocity, bulletsSpawnFrom, bulletsPerShot, hitPoints, customLaserSound = laserSound, ...config }) {
+    constructor({ bulletVelocity, bulletsSpawnFrom, bulletsPerShot, hitPoints, customLaserSound = laserSound, ...config }) {
         super(config);
         this.leftForce = createVector(-0.4, 0);
         this.rightForce = createVector(0.4, 0);
@@ -95,10 +94,9 @@ class Ship extends SpriteMover {
         this.bullets = [];
         this.bulletVelocity = bulletVelocity;
         this.bulletsSpawnFrom = bulletsSpawnFrom;
-        this.bulletFont = bulletFont;
-        this.bulletTextOptions = bulletTextOptions;
         this.bulletsPerShot = bulletsPerShot;
         this.hitPoints = hitPoints;
+        this.maxHitPoints = hitPoints;
         this.laserSound = customLaserSound;
     }
     moveLeft() {
@@ -109,21 +107,18 @@ class Ship extends SpriteMover {
     }
     update() {
         super.update();
-        this.bullets = this.bullets.filter(x => x.active).map(x => x.update());
+        this.bullets = this.bullets.filter((x) => x.active).map((x) => x.update());
         return this;
     }
-    draw() {
-        super.draw();
-        this.bullets.forEach((x, i) => {
-            x.draw();
-        });
+    draw(...args) {
+        super.draw(...args);
+        this.bullets.forEach((x) => x.draw());
         return this;
     }
     shoot() {
         if (!this.isOffScreen) {
             this.laserSound.play();
         }
-        const bulletText = random(this.bulletTextOptions);
         let radiusPerShot = HALF_PI / (this.bulletsPerShot - 1);
         push();
         for (let i = 0; i < this.bulletsPerShot; i++) {
@@ -138,29 +133,25 @@ class Ship extends SpriteMover {
             const bullet = new Bullet({
                 pos: bulletPosition,
                 vel: bulletVelocity,
-                height: 15,
-                width: 5,
-                text: bulletText,
-                font: this.bulletFont
+                height: 40,
+                width: 20,
             });
             this.bullets.push(bullet);
         }
         pop();
     }
     checkBulletCollision(object) {
-        return this.bullets.find(bullet => object.checkCollision(bullet));
+        return this.bullets.find((bullet) => object.checkCollision(bullet));
     }
 }
 class Enemy extends Ship {
-    constructor({ name, score, fireRate, spritePath, ...config }) {
+    constructor({ name, score, fireRate, sprite, ...config }) {
         super({
             ...config,
-            spritePath,
+            sprite,
             bulletVelocity: createVector(0, 10),
             bulletsSpawnFrom: 1,
-            bulletFont: regularFont,
-            bulletTextOptions: enemyBullets,
-            customLaserSound: laserSound
+            customLaserSound: laserSound,
         });
         this.nextShotAtFrame = Math.floor(random(150));
         this.nextDirectionChangeAtFrame = Math.floor(random(400));
@@ -203,6 +194,17 @@ class Enemy extends Ship {
         textFont(regularFont);
         fill(255);
         text(this.name.toUpperCase(), this.left + this.width / 2, this.bottom + 16);
+        const sectionWidth = this.width / this.maxHitPoints;
+        const healthPercentage = this.hitPoints / this.maxHitPoints;
+        if (healthPercentage > 0.5) {
+            fill(100, 255, 100, 150);
+        }
+        else {
+            fill(255, 0, 0, 150);
+        }
+        for (let i = 0; i < this.hitPoints; i++) {
+            rect(this.left + sectionWidth * i, this.top - 10, sectionWidth - 2, 4);
+        }
         return this;
     }
 }
@@ -210,17 +212,21 @@ class PlayerShip extends Ship {
     constructor(config) {
         super({
             ...config,
-            spritePath: './images/player.png',
+            sprite: playerShip,
             bulletVelocity: createVector(0, -10),
             bulletsSpawnFrom: 0,
-            bulletFont: titleFont,
-            bulletTextOptions: playerBullets,
             customLaserSound: playerLaserSound,
             bulletsPerShot: 1,
-            hitPoints: 1
+            hitPoints: 1,
         });
         this.dragForce = 0.03;
+        this.lastShot = 0;
         this.vel.limit(1);
+    }
+    shoot() {
+        super.shoot();
+        this.lastShot = frameCount;
+        return this;
     }
     move() {
         super.move();
@@ -228,6 +234,15 @@ class PlayerShip extends Ship {
         if (this.left < 0 || this.right > windowWidth) {
             this.vel.mult(-1);
             this.pos.add(this.vel);
+        }
+        return this;
+    }
+    draw() {
+        if (frameCount - this.lastShot < 10) {
+            super.draw({ sprite: playerShipShooting });
+        }
+        else {
+            super.draw();
         }
         return this;
     }
@@ -276,7 +291,7 @@ function showGameTitle(font) {
     textFont(font);
     textSize(80);
     textStyle(BOLD);
-    text(`fj's data blaster`, windowWidth / 2, 50);
+    text(`ayesha's coffee shot`, windowWidth / 2, 50);
     pop();
 }
 function showScore(font, score) {
@@ -315,13 +330,13 @@ class BossEnemy extends Enemy {
             name: 'Tinfoil Kid',
             pos,
             vel: vel.mult(2),
-            spritePath: 'images/steves-head.png',
+            sprite: enemyImage.steve,
             hitPoints: 15,
             fireRate: 1,
             bulletsPerShot: 5,
             score: 800,
             height: 250,
-            width: 250
+            width: 250,
         });
     }
     explode() {
@@ -334,13 +349,13 @@ class PowerBIEnemy extends Enemy {
             name: random(neroCoffees),
             pos,
             vel,
-            spritePath: 'images/nero.png',
+            sprite: enemyImage.nero,
             hitPoints: 2,
             fireRate: 0.5,
             bulletsPerShot: 1,
             score: 200,
             height: 50,
-            width: 50
+            width: 50,
         });
     }
 }
@@ -350,13 +365,13 @@ class SSRSEnemy extends Enemy {
             name: random(mugCoffees),
             pos,
             vel: vel.mult(2),
-            spritePath: 'images/mug.png',
+            sprite: enemyImage.mug,
             hitPoints: 1,
             fireRate: 0.5,
             bulletsPerShot: 1,
             score: 100,
             height: 50,
-            width: 50
+            width: 50,
         });
     }
 }
@@ -366,13 +381,13 @@ class SQLEnemy extends Enemy {
             name: random(yahavaCoffees),
             pos,
             vel: vel.mult(2),
-            spritePath: 'images/yahava.png',
+            sprite: enemyImage.yahava,
             hitPoints: 1,
             fireRate: 0.5,
             bulletsPerShot: 1,
             score: 100,
             height: 50,
-            width: 50
+            width: 50,
         });
     }
 }
@@ -382,13 +397,13 @@ class SpotfireEnemy extends Enemy {
             name: random(dhCoffees),
             pos,
             vel,
-            spritePath: 'images/dh.png',
+            sprite: enemyImage.dh,
             hitPoints: 2,
             fireRate: 0.5,
             bulletsPerShot: 1,
             score: 150,
             height: 50,
-            width: 50
+            width: 50,
         });
     }
 }
@@ -412,46 +427,44 @@ const dhCoffees = [
     'Cappuccino',
     'Espresso',
     'Vienna',
-    'Fancy Pants Drip Coffee'
+    'Fancy Pants Drip Coffee',
 ];
 const mugCoffees = ['OC', 'LVL 17', 'Instant '];
-const enemyBullets = ['SELECT *', 'LOCK ON'];
-const playerBullets = ['truncate', 'drop', 'restart', 'ssis'];
 const levels = [
     {
         waves: [
             [
                 { enemy: SQLEnemy, count: 3 },
-                { enemy: PowerBIEnemy, count: 2 }
-            ]
-        ]
+                { enemy: PowerBIEnemy, count: 2 },
+            ],
+        ],
     },
     {
         waves: [
             [
                 { enemy: SQLEnemy, count: 7 },
-                { enemy: PowerBIEnemy, count: 2 }
-            ]
-        ]
+                { enemy: PowerBIEnemy, count: 2 },
+            ],
+        ],
     },
     {
-        waves: [[{ enemy: BossEnemy, count: 1 }]]
+        waves: [[{ enemy: BossEnemy, count: 1 }]],
     },
     {
         waves: [
             [
                 { enemy: SQLEnemy, count: 3 },
                 { enemy: PowerBIEnemy, count: 2 },
-                { enemy: SSRSEnemy, count: 4 }
+                { enemy: SSRSEnemy, count: 4 },
             ],
             [
                 { enemy: SSRSEnemy, count: 6 },
-                { enemy: SpotfireEnemy, count: 4 }
-            ]
-        ]
+                { enemy: SpotfireEnemy, count: 4 },
+            ],
+        ],
     },
     {
-        waves: [[{ enemy: BossEnemy, count: 2 }]]
+        waves: [[{ enemy: BossEnemy, count: 2 }]],
     },
     {
         waves: [
@@ -459,25 +472,25 @@ const levels = [
                 { enemy: SQLEnemy, count: 6 },
                 { enemy: PowerBIEnemy, count: 9 },
                 { enemy: SSRSEnemy, count: 5 },
-                { enemy: SpotfireEnemy, count: 4 }
+                { enemy: SpotfireEnemy, count: 4 },
             ],
             [
                 { enemy: SQLEnemy, count: 6 },
                 { enemy: PowerBIEnemy, count: 9 },
                 { enemy: SSRSEnemy, count: 5 },
-                { enemy: SpotfireEnemy, count: 4 }
+                { enemy: SpotfireEnemy, count: 4 },
             ],
             [
                 { enemy: SQLEnemy, count: 6 },
                 { enemy: PowerBIEnemy, count: 9 },
                 { enemy: SSRSEnemy, count: 5 },
-                { enemy: SpotfireEnemy, count: 4 }
-            ]
-        ]
+                { enemy: SpotfireEnemy, count: 4 },
+            ],
+        ],
     },
     {
-        waves: [[{ enemy: BossEnemy, count: 10 }]]
-    }
+        waves: [[{ enemy: BossEnemy, count: 10 }]],
+    },
 ];
 const messagePrefix = [
     'Captain',
@@ -485,7 +498,7 @@ const messagePrefix = [
     'Weapons Specalist',
     'Major Sergeant General',
     'Ultimate Mega Badass',
-    'Supreme Commander'
+    'Supreme Commander',
 ];
 const chrisList = ['Just', 'Plain', 'Space Cadet', 'Noob', 'Very Naughty Boy'];
 const bossName = ['Tin Foil Kid'];
@@ -508,23 +521,42 @@ let smallExplosion;
 let bossExplosion;
 let enemyShip;
 let playerShip;
+let playerShipShooting;
 let music;
+let enemyImage;
+let tetrisImages;
+let sounds;
 let score;
 let buttons;
 function preload() {
+    enemyImage = {
+        dh: loadImage('images/dh.png'),
+        nero: loadImage('images/nero.png'),
+        mug: loadImage('images/mug.png'),
+        yahava: loadImage('images/yahava.png'),
+        steve: loadImage('images/steves-head.png'),
+    };
+    playerShip = loadImage('images/player.png');
+    playerShipShooting = loadImage('images/player-shooting.png');
     backgroundImage = loadImage('images/background.jpg');
+    tetrisImages = Array.from({ length: 7 }).map((_, i) => loadImage(`images/tetris-${i}.png`));
     titleFont = loadFont('fonts/StarJedi.ttf');
     regularFont = loadFont('fonts/OpenSans-Regular.ttf');
     laserSound = new p5.SoundFile('sounds/laser.wav');
-    laserSound.setVolume(0.3);
     playerLaserSound = new p5.SoundFile('sounds/pew.wav');
-    playerLaserSound.setVolume(0.3);
     explosionSound = new p5.SoundFile('sounds/boom.wav');
-    playerShip = loadImage('images/player.png');
     music = new p5.SoundFile('sounds/tetris-theme.mp3');
-    music.setVolume(0.1);
     smallExplosion = new p5.SoundFile('sounds/small-explosion.wav');
     bossExplosion = new p5.SoundFile('sounds/boss-explosion.wav');
+    sounds = [
+        { file: laserSound, volume: 0.3 },
+        { file: playerLaserSound, volume: 0.3 },
+        { file: explosionSound, volume: 1 },
+        { file: music, volume: 0.1 },
+        { file: smallExplosion, volume: 1 },
+        { file: bossExplosion, volume: 1 },
+    ];
+    sounds.forEach((sound) => sound.file.setVolume(sound.volume));
 }
 function startRound(settings) {
     document.getElementById('messageContainer').classList.add('hidden');
@@ -554,7 +586,7 @@ function setup() {
     angleMode(RADIANS);
     textAlign(CENTER, CENTER);
     createCanvas(windowWidth, windowHeight);
-    rectMode(CENTER);
+    rectMode(CORNER);
     gameOver = false;
     ship = new PlayerShip({
         pos: createVector(windowWidth / 2, windowHeight - 140),
@@ -600,6 +632,7 @@ function draw() {
     ship.update().draw();
     const newEnemies = [];
     for (const enemy of enemies) {
+        enemy.update().draw();
         if (!enemy.active)
             continue;
         const collision = ship.checkBulletCollision(enemy);
@@ -617,7 +650,7 @@ function draw() {
             gameOver = true;
             killedBy = enemy.name;
         }
-        newEnemies.push(enemy.update().draw());
+        newEnemies.push(enemy);
     }
     if (newEnemies.length === 0) {
         roundNumber++;
@@ -654,22 +687,9 @@ function setupButtons() {
     const muteButton = document.getElementById('mute');
     let muted = false;
     muteButton.onclick = function (event) {
-        if (muted) {
-            music.setVolume(0.1);
-            explosionSound.setVolume(1);
-            laserSound.setVolume(0.4);
-            playerLaserSound.setVolume(0.6);
-            muted = false;
-            muteButton.classList.remove('muted');
-        }
-        else {
-            music.setVolume(0);
-            explosionSound.setVolume(0);
-            laserSound.setVolume(0);
-            playerLaserSound.setVolume(0);
-            muted = true;
-            muteButton.classList.add('muted');
-        }
+        muted = !muted;
+        sounds.forEach((sound) => sound.file.setVolume(muted ? 0 : sound.volume));
+        muteButton.classList[muted ? 'add' : 'remove']('muted');
     };
     const retryButton = document.getElementById('retry');
     retryButton.onclick = function (event) {
@@ -684,9 +704,7 @@ function setupButtons() {
     };
     const exitButton = document.getElementById('exit');
     exitButton.onclick = function () {
-        require('electron')
-            .remote.getCurrentWindow()
-            .close();
+        require('electron').remote.getCurrentWindow().close();
     };
     return { continueButton, exitButton, muteButton, retryButton };
 }
