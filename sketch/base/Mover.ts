@@ -53,8 +53,8 @@ abstract class Mover {
     return (
       object.right > this.left + 10 &&
       object.left < this.right - 10 &&
-      object.bottom > this.top &&
-      object.top < this.bottom
+      object.bottom > this.top + 20 &&
+      object.top < this.bottom - 20
     )
   }
 

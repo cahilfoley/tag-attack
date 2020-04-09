@@ -28,8 +28,8 @@ class Mover {
     checkCollision(object) {
         return (object.right > this.left + 10 &&
             object.left < this.right - 10 &&
-            object.bottom > this.top &&
-            object.top < this.bottom);
+            object.bottom > this.top + 20 &&
+            object.top < this.bottom - 20);
     }
     applyForce(force) {
         this.acc.add(force);
@@ -514,8 +514,6 @@ const messagePrefix = [
 ];
 const chrisList = ['Just', 'Plain', 'Space Cadet', 'Noob', 'Very Naughty Boy'];
 const bossName = ['Tin Foil Kid'];
-let ship;
-let backgroundImage;
 let enemies;
 let gameOver;
 let killedBy;
@@ -524,6 +522,13 @@ let victory;
 let farewellMessage;
 let senderPrefix;
 let roundNumber;
+let ship;
+let backgroundImage;
+let enemyShip;
+let playerShip;
+let playerShipShooting;
+let enemyImage;
+let tetrisImages;
 let titleFont;
 let regularFont;
 let laserSound;
@@ -531,12 +536,8 @@ let playerLaserSound;
 let explosionSound;
 let smallExplosion;
 let bossExplosion;
-let enemyShip;
-let playerShip;
-let playerShipShooting;
 let music;
-let enemyImage;
-let tetrisImages;
+let roundEndSounds;
 let sounds;
 let score;
 let buttons;
@@ -560,6 +561,7 @@ function preload() {
     music = new p5.SoundFile('sounds/tetris-theme.mp3');
     smallExplosion = new p5.SoundFile('sounds/slurp.wav');
     bossExplosion = new p5.SoundFile('sounds/boss-explosion.wav');
+    roundEndSounds = Array.from({ length: 5 }).map((_, i) => new p5.SoundFile(`sounds/coffee-voice-${i}.mp3`));
     sounds = [
         { file: laserSound, volume: 0.3 },
         { file: playerLaserSound, volume: 0.3 },
@@ -567,6 +569,7 @@ function preload() {
         { file: music, volume: 0.1 },
         { file: smallExplosion, volume: 1 },
         { file: bossExplosion, volume: 1 },
+        ...roundEndSounds.map((file) => ({ file, volume: 1 })),
     ];
     sounds.forEach((sound) => sound.file.setVolume(sound.volume));
 }
@@ -669,6 +672,8 @@ function draw() {
         newEnemies.push(enemy);
     }
     if (newEnemies.length === 0) {
+        const sound = random(roundEndSounds);
+        sound.play();
         roundNumber++;
         farewellMessage = farewellMessages[roundNumber % farewellMessages.length];
         senderPrefix =
