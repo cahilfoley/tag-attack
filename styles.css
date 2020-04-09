@@ -99,9 +99,10 @@ button ion-icon {
 }
 
 span.flashing {
-  font-family: 'Monoton', cursive;
+  font-family: 'Pacifico', cursive;
   -webkit-animation: h2 0.35s infinite;
   animation: flashing 0.35s infinite;
+  font-size: 1.2rem;
 }
 
 @keyframes flashing {
