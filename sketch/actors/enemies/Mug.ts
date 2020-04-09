@@ -1,10 +1,12 @@
-interface SSRSEnemyProps {
+/// <reference path="Enemy.ts"/>
+
+interface MugEnemyProps {
   pos: p5.Vector
   vel: p5.Vector
 }
 
-class SSRSEnemy extends Enemy {
-  constructor({ pos, vel }: SSRSEnemyProps) {
+class MugEnemy extends Enemy {
+  constructor({ pos, vel }: MugEnemyProps) {
     super({
       name: random(mugCoffees),
       pos,

@@ -1,10 +1,12 @@
-interface SpotfireEnemyProps {
+/// <reference path="Enemy.ts"/>
+
+interface DHEnemyProps {
   vel: p5.Vector
   pos: p5.Vector
 }
 
-class SpotfireEnemy extends Enemy {
-  constructor({ pos, vel }: SpotfireEnemyProps) {
+class DHEnemy extends Enemy {
+  constructor({ pos, vel }: DHEnemyProps) {
     super({
       name: random(dhCoffees),
       pos,

@@ -1,10 +1,12 @@
-interface SSRSEnemyProps {
+/// <reference path="Enemy.ts"/>
+
+interface SteveBossEnemyProps {
   pos: p5.Vector
   vel: p5.Vector
 }
 
-class BossEnemy extends Enemy {
-  constructor({ pos, vel }: SSRSEnemyProps) {
+class SteveBossEnemy extends Enemy {
+  constructor({ pos, vel }: SteveBossEnemyProps) {
     super({
       name: 'Tinfoil Kid',
       pos,

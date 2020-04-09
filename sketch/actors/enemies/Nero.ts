@@ -1,10 +1,12 @@
-interface PowerBIEnemyProps {
+/// <reference path="Enemy.ts"/>
+
+interface NeroEnemyProps {
   vel: p5.Vector
   pos: p5.Vector
 }
 
-class PowerBIEnemy extends Enemy {
-  constructor({ pos, vel }: PowerBIEnemyProps) {
+class NeroEnemy extends Enemy {
+  constructor({ pos, vel }: NeroEnemyProps) {
     super({
       name: random(neroCoffees),
       pos,

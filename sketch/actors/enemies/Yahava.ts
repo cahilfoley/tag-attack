@@ -1,10 +1,12 @@
-interface SQLEnemyProps {
+/// <reference path="Enemy.ts"/>
+
+interface YahavaEnemyProps {
   pos: p5.Vector
   vel: p5.Vector
 }
 
-class SQLEnemy extends Enemy {
-  constructor({ pos, vel }: SQLEnemyProps) {
+class YahavaEnemy extends Enemy {
+  constructor({ pos, vel }: YahavaEnemyProps) {
     super({
       name: random(yahavaCoffees),
       pos,

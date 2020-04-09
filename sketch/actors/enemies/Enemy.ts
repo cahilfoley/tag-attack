@@ -1,4 +1,4 @@
-/// <reference path="Ship.ts"/>
+/// <reference path="../Ship.ts"/>
 
 interface EnemyConfig extends MoverConfig {
   name: string

@@ -336,7 +336,26 @@ function messages(font, message) {
     rect(windowWidth / 2, windowHeight / 2, 200, 200);
     fill('lightGrey');
 }
-class BossEnemy extends Enemy {
+class ChrisBossEnemy extends Enemy {
+    constructor({ pos, vel }) {
+        super({
+            name: 'Pout Man',
+            pos,
+            vel: vel.mult(2),
+            sprite: enemyImage.chris,
+            hitPoints: 10,
+            fireRate: 1,
+            bulletsPerShot: 3,
+            score: 800,
+            height: 250,
+            width: 200,
+        });
+    }
+    explode() {
+        bossExplosion.play();
+    }
+}
+class SteveBossEnemy extends Enemy {
     constructor({ pos, vel }) {
         super({
             name: 'Tinfoil Kid',
@@ -355,7 +374,7 @@ class BossEnemy extends Enemy {
         bossExplosion.play();
     }
 }
-class PowerBIEnemy extends Enemy {
+class NeroEnemy extends Enemy {
     constructor({ pos, vel }) {
         super({
             name: random(neroCoffees),
@@ -371,7 +390,7 @@ class PowerBIEnemy extends Enemy {
         });
     }
 }
-class SSRSEnemy extends Enemy {
+class MugEnemy extends Enemy {
     constructor({ pos, vel }) {
         super({
             name: random(mugCoffees),
@@ -387,7 +406,7 @@ class SSRSEnemy extends Enemy {
         });
     }
 }
-class SQLEnemy extends Enemy {
+class YahavaEnemy extends Enemy {
     constructor({ pos, vel }) {
         super({
             name: random(yahavaCoffees),
@@ -403,7 +422,7 @@ class SQLEnemy extends Enemy {
         });
     }
 }
-class SpotfireEnemy extends Enemy {
+class DHEnemy extends Enemy {
     constructor({ pos, vel }) {
         super({
             name: random(dhCoffees),
@@ -446,62 +465,67 @@ const levels = [
     {
         waves: [
             [
-                { enemy: SQLEnemy, count: 3 },
-                { enemy: PowerBIEnemy, count: 2 },
+                { enemy: YahavaEnemy, count: 3 },
+                { enemy: NeroEnemy, count: 2 },
             ],
         ],
     },
     {
         waves: [
             [
-                { enemy: SQLEnemy, count: 7 },
-                { enemy: PowerBIEnemy, count: 2 },
+                { enemy: YahavaEnemy, count: 7 },
+                { enemy: NeroEnemy, count: 2 },
             ],
         ],
     },
     {
-        waves: [[{ enemy: BossEnemy, count: 1 }]],
+        waves: [[{ enemy: ChrisBossEnemy, count: 2 }]],
     },
     {
         waves: [
             [
-                { enemy: SQLEnemy, count: 3 },
-                { enemy: PowerBIEnemy, count: 2 },
-                { enemy: SSRSEnemy, count: 4 },
+                { enemy: YahavaEnemy, count: 3 },
+                { enemy: NeroEnemy, count: 2 },
+                { enemy: MugEnemy, count: 4 },
             ],
             [
-                { enemy: SSRSEnemy, count: 6 },
-                { enemy: SpotfireEnemy, count: 4 },
+                { enemy: MugEnemy, count: 6 },
+                { enemy: DHEnemy, count: 4 },
             ],
         ],
     },
     {
-        waves: [[{ enemy: BossEnemy, count: 2 }]],
+        waves: [[{ enemy: SteveBossEnemy, count: 2 }]],
     },
     {
         waves: [
             [
-                { enemy: SQLEnemy, count: 6 },
-                { enemy: PowerBIEnemy, count: 9 },
-                { enemy: SSRSEnemy, count: 5 },
-                { enemy: SpotfireEnemy, count: 4 },
+                { enemy: YahavaEnemy, count: 6 },
+                { enemy: NeroEnemy, count: 9 },
+                { enemy: MugEnemy, count: 5 },
+                { enemy: DHEnemy, count: 4 },
             ],
             [
-                { enemy: SQLEnemy, count: 6 },
-                { enemy: PowerBIEnemy, count: 9 },
-                { enemy: SSRSEnemy, count: 5 },
-                { enemy: SpotfireEnemy, count: 4 },
+                { enemy: YahavaEnemy, count: 6 },
+                { enemy: NeroEnemy, count: 9 },
+                { enemy: MugEnemy, count: 5 },
+                { enemy: DHEnemy, count: 4 },
             ],
             [
-                { enemy: SQLEnemy, count: 6 },
-                { enemy: PowerBIEnemy, count: 9 },
-                { enemy: SSRSEnemy, count: 5 },
-                { enemy: SpotfireEnemy, count: 4 },
+                { enemy: YahavaEnemy, count: 6 },
+                { enemy: NeroEnemy, count: 9 },
+                { enemy: MugEnemy, count: 5 },
+                { enemy: DHEnemy, count: 4 },
             ],
         ],
     },
     {
-        waves: [[{ enemy: BossEnemy, count: 10 }]],
+        waves: [
+            [
+                { enemy: SteveBossEnemy, count: 4 },
+                { enemy: ChrisBossEnemy, count: 6 },
+            ],
+        ],
     },
 ];
 const messagePrefix = [
@@ -510,7 +534,7 @@ const messagePrefix = [
     'Coffee Snob',
     'Barista Wannabe',
 ];
-const chrisList = ['Just', 'Plain', 'Blend 43',];
+const chrisList = ['Just', 'Plain', 'Blend 43', 'Captain Scrum Overlord'];
 const bossName = ['Tin Foil Kid'];
 let enemies;
 let gameOver;
@@ -547,6 +571,7 @@ function preload() {
         mug: loadImage('images/mug.png'),
         yahava: loadImage('images/yahava.png'),
         steve: loadImage('images/steves-head.png'),
+        chris: loadImage('images/chris-head.png'),
     };
     playerShip = loadImage('images/player.png');
     playerShipShooting = loadImage('images/player-shooting.png');

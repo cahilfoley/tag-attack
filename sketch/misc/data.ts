@@ -1,8 +1,9 @@
-/// <reference path="../actors/BossEnemy.ts"/>
-/// <reference path="../actors/PowerBIEnemy.ts"/>
-/// <reference path="../actors/SSRSEnemy.ts"/>
-/// <reference path="../actors/SQLEnemy.ts"/>
-/// <reference path="../actors/SpotfireEnemy.ts"/>
+/// <reference path="../actors/enemies/ChrisBoss.ts"/>
+/// <reference path="../actors/enemies/SteveBoss.ts"/>
+/// <reference path="../actors/enemies/Nero.ts"/>
+/// <reference path="../actors/enemies/Mug.ts"/>
+/// <reference path="../actors/enemies/Yahava.ts"/>
+/// <reference path="../actors/enemies/DH.ts"/>
 
 const yahavaCoffees = [
   'Caffe Americano',
@@ -35,62 +36,67 @@ const levels: RoundSettings[] = [
   {
     waves: [
       [
-        { enemy: SQLEnemy, count: 3 },
-        { enemy: PowerBIEnemy, count: 2 },
+        { enemy: YahavaEnemy, count: 3 },
+        { enemy: NeroEnemy, count: 2 },
       ],
     ],
   },
   {
     waves: [
       [
-        { enemy: SQLEnemy, count: 7 },
-        { enemy: PowerBIEnemy, count: 2 },
+        { enemy: YahavaEnemy, count: 7 },
+        { enemy: NeroEnemy, count: 2 },
       ],
     ],
   },
   {
-    waves: [[{ enemy: BossEnemy, count: 1 }]],
+    waves: [[{ enemy: ChrisBossEnemy, count: 2 }]],
   },
   {
     waves: [
       [
-        { enemy: SQLEnemy, count: 3 },
-        { enemy: PowerBIEnemy, count: 2 },
-        { enemy: SSRSEnemy, count: 4 },
+        { enemy: YahavaEnemy, count: 3 },
+        { enemy: NeroEnemy, count: 2 },
+        { enemy: MugEnemy, count: 4 },
       ],
       [
-        { enemy: SSRSEnemy, count: 6 },
-        { enemy: SpotfireEnemy, count: 4 },
+        { enemy: MugEnemy, count: 6 },
+        { enemy: DHEnemy, count: 4 },
       ],
     ],
   },
   {
-    waves: [[{ enemy: BossEnemy, count: 2 }]],
+    waves: [[{ enemy: SteveBossEnemy, count: 2 }]],
   },
   {
     waves: [
       [
-        { enemy: SQLEnemy, count: 6 },
-        { enemy: PowerBIEnemy, count: 9 },
-        { enemy: SSRSEnemy, count: 5 },
-        { enemy: SpotfireEnemy, count: 4 },
+        { enemy: YahavaEnemy, count: 6 },
+        { enemy: NeroEnemy, count: 9 },
+        { enemy: MugEnemy, count: 5 },
+        { enemy: DHEnemy, count: 4 },
       ],
       [
-        { enemy: SQLEnemy, count: 6 },
-        { enemy: PowerBIEnemy, count: 9 },
-        { enemy: SSRSEnemy, count: 5 },
-        { enemy: SpotfireEnemy, count: 4 },
+        { enemy: YahavaEnemy, count: 6 },
+        { enemy: NeroEnemy, count: 9 },
+        { enemy: MugEnemy, count: 5 },
+        { enemy: DHEnemy, count: 4 },
       ],
       [
-        { enemy: SQLEnemy, count: 6 },
-        { enemy: PowerBIEnemy, count: 9 },
-        { enemy: SSRSEnemy, count: 5 },
-        { enemy: SpotfireEnemy, count: 4 },
+        { enemy: YahavaEnemy, count: 6 },
+        { enemy: NeroEnemy, count: 9 },
+        { enemy: MugEnemy, count: 5 },
+        { enemy: DHEnemy, count: 4 },
       ],
     ],
   },
   {
-    waves: [[{ enemy: BossEnemy, count: 10 }]],
+    waves: [
+      [
+        { enemy: SteveBossEnemy, count: 4 },
+        { enemy: ChrisBossEnemy, count: 6 },
+      ],
+    ],
   },
 ]
 
@@ -101,6 +107,6 @@ const messagePrefix = [
   'Barista Wannabe',
 ]
 
-const chrisList = ['Just', 'Plain', 'Blend 43','Captain Scrum Overlord']
+const chrisList = ['Just', 'Plain', 'Blend 43', 'Captain Scrum Overlord']
 
 const bossName = ['Tin Foil Kid']

@@ -1,4 +1,4 @@
-/// <reference path="actors/Enemy.ts"/>
+/// <reference path="actors/enemies/Enemy.ts"/>
 /// <reference path="actors/PlayerShip.ts"/>
 /// <reference path="misc/text.ts"/>
 /// <reference path="misc/data.ts"/>
@@ -51,6 +51,7 @@ function preload() {
     mug: loadImage('images/mug.png'),
     yahava: loadImage('images/yahava.png'),
     steve: loadImage('images/steves-head.png'),
+    chris: loadImage('images/chris-head.png'),
   }
   playerShip = loadImage('images/player.png')
   playerShipShooting = loadImage('images/player-shooting.png')
