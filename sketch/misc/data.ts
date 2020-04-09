@@ -95,14 +95,12 @@ const levels: RoundSettings[] = [
 ]
 
 const messagePrefix = [
-  'Captain',
-  'Officer',
-  'Weapons Specalist',
-  'Major Sergeant General',
-  'Ultimate Mega Badass',
-  'Supreme Commander',
+  'Loud Sipper',
+  'Chief Sipper',
+  'Coffee Snob',
+  'Barista Wannabe',
 ]
 
-const chrisList = ['Just', 'Plain', 'Space Cadet', 'Noob', 'Very Naughty Boy']
+const chrisList = ['Just', 'Plain', 'Blend 43',]
 
 const bossName = ['Tin Foil Kid']

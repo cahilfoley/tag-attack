@@ -46,7 +46,7 @@ function showNextRoundMessage(
   messageContent.innerHTML = message.content
 
   const transmissionContent = document.getElementById('transmission')
-  transmissionContent.innerHTML = `Incomming Transmission from ${prefix} ${message.sender}`
+  transmissionContent.innerHTML = `${prefix} ${message.sender} wants to grab a coffee with you`
 
   pop()
 }
