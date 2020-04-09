@@ -101,6 +101,6 @@ const messagePrefix = [
   'Barista Wannabe',
 ]
 
-const chrisList = ['Just', 'Plain', 'Blend 43',]
+const chrisList = ['Just', 'Plain', 'Blend 43','Captain Scrum Overlord']
 
 const bossName = ['Tin Foil Kid']
