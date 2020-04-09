@@ -3,9 +3,6 @@
 /// <reference path="misc/text.ts"/>
 /// <reference path="misc/data.ts"/>
 
-let ship: PlayerShip
-let backgroundImage: p5.Image
-
 let enemies: Enemy[]
 let gameOver: boolean
 let killedBy: string
@@ -14,19 +11,25 @@ let victory: boolean
 let farewellMessage: Message
 let senderPrefix: string
 let roundNumber: number
+
+let ship: PlayerShip
+let backgroundImage: p5.Image
+let enemyShip: p5.Image
+let playerShip: p5.Image
+let playerShipShooting: p5.Image
+let enemyImage: Record<string, p5.Image>
+let tetrisImages: p5.Image[]
+
 let titleFont: p5.Font
 let regularFont: p5.Font
+
 let laserSound: p5.SoundFile
 let playerLaserSound: p5.SoundFile
 let explosionSound: p5.SoundFile
 let smallExplosion: p5.SoundFile
 let bossExplosion: p5.SoundFile
-let enemyShip: p5.Image
-let playerShip: p5.Image
-let playerShipShooting: p5.Image
 let music: p5.SoundFile
-let enemyImage: Record<string, p5.Image>
-let tetrisImages: p5.Image[]
+let roundEndSounds: p5.SoundFile[]
 
 interface Sound {
   file: p5.SoundFile
@@ -66,6 +69,9 @@ function preload() {
   music = new p5.SoundFile('sounds/tetris-theme.mp3')
   smallExplosion = new p5.SoundFile('sounds/slurp.wav')
   bossExplosion = new p5.SoundFile('sounds/boss-explosion.wav')
+  roundEndSounds = Array.from({ length: 5 }).map(
+    (_, i) => new p5.SoundFile(`sounds/coffee-voice-${i}.mp3`)
+  )
 
   sounds = [
     { file: laserSound, volume: 0.3 },
@@ -74,6 +80,7 @@ function preload() {
     { file: music, volume: 0.1 },
     { file: smallExplosion, volume: 1 },
     { file: bossExplosion, volume: 1 },
+    ...roundEndSounds.map((file) => ({ file, volume: 1 })),
   ]
 
   sounds.forEach((sound) => sound.file.setVolume(sound.volume))
@@ -224,6 +231,9 @@ function draw() {
   }
 
   if (newEnemies.length === 0) {
+    const sound: p5.SoundFile = random(roundEndSounds)
+    sound.play()
+
     roundNumber++
     farewellMessage = farewellMessages[roundNumber % farewellMessages.length]
 
