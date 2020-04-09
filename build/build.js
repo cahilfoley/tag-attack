@@ -292,7 +292,7 @@ function showNextRoundMessage(font, roundNumber, message, prefix) {
     messageBox.classList.remove('hidden');
     messageContent.innerHTML = message.content;
     const transmissionContent = document.getElementById('transmission');
-    transmissionContent.innerHTML = `Incomming Transmission from ${prefix} ${message.sender}`;
+    transmissionContent.innerHTML = `${prefix} ${message.sender} wants to grab a coffee with you`;
     pop();
 }
 function showGameTitle(font) {
@@ -505,14 +505,12 @@ const levels = [
     },
 ];
 const messagePrefix = [
-    'Captain',
-    'Officer',
-    'Weapons Specalist',
-    'Major Sergeant General',
-    'Ultimate Mega Badass',
-    'Supreme Commander',
+    'Loud Sipper',
+    'Chief Sipper',
+    'Coffee Snob',
+    'Barista Wannabe',
 ];
-const chrisList = ['Just', 'Plain', 'Space Cadet', 'Noob', 'Very Naughty Boy'];
+const chrisList = ['Just', 'Plain', 'Blend 43',];
 const bossName = ['Tin Foil Kid'];
 let ship;
 let backgroundImage;
