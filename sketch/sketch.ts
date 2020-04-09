@@ -64,7 +64,7 @@ function preload() {
   playerLaserSound = new p5.SoundFile('sounds/pew.wav')
   explosionSound = new p5.SoundFile('sounds/boom.wav')
   music = new p5.SoundFile('sounds/tetris-theme.mp3')
-  smallExplosion = new p5.SoundFile('sounds/small-explosion.wav')
+  smallExplosion = new p5.SoundFile('sounds/slurp.wav')
   bossExplosion = new p5.SoundFile('sounds/boss-explosion.wav')
 
   sounds = [
