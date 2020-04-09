@@ -520,6 +520,7 @@ let victory;
 let farewellMessage;
 let senderPrefix;
 let roundNumber;
+let roundEnded;
 let ship;
 let backgroundImage;
 let enemyShip;
@@ -670,6 +671,7 @@ function draw() {
         newEnemies.push(enemy);
     }
     if (newEnemies.length === 0) {
+        roundEnded = Date.now();
         const sound = random(roundEndSounds);
         sound.play();
         roundNumber++;
@@ -686,7 +688,17 @@ function draw() {
 let chainingSecret = false;
 function keyPressed() {
     if (key === ' ') {
-        ship.shoot();
+        if (nextRound) {
+            if (Date.now() - roundEnded > 500) {
+                buttons.continueButton.click();
+            }
+        }
+        else if (gameOver) {
+            buttons.retryButton.click();
+        }
+        else {
+            ship.shoot();
+        }
     }
     else if (key === 'f') {
         chainingSecret = true;

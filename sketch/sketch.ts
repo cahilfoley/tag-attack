@@ -11,6 +11,7 @@ let victory: boolean
 let farewellMessage: Message
 let senderPrefix: string
 let roundNumber: number
+let roundEnded: number
 
 let ship: PlayerShip
 let backgroundImage: p5.Image
@@ -231,6 +232,8 @@ function draw() {
   }
 
   if (newEnemies.length === 0) {
+    roundEnded = Date.now()
+
     const sound: p5.SoundFile = random(roundEndSounds)
     sound.play()
 
@@ -253,7 +256,16 @@ let chainingSecret = false
 
 function keyPressed() {
   if (key === ' ') {
-    ship.shoot()
+    if (nextRound) {
+      // Can move to the next round with spacebar after a small delay
+      if (Date.now() - roundEnded > 500) {
+        buttons.continueButton.click()
+      }
+    } else if (gameOver) {
+      buttons.retryButton.click()
+    } else {
+      ship.shoot()
+    }
   } else if (key === 'f') {
     chainingSecret = true
   } else if (key === 'j' && chainingSecret) {
