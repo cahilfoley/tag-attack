@@ -6,8 +6,10 @@
 function trimLines(string: string): string {
   return string
     .split(/\n|\r|\r\n/g)
-    .map(line => line.trim())
-    .join('\n')
+    .map((line) => line.trim())
+    .join('<br/>\n')
+    .replace(/(^(<br\/>)+)|((<br\/>)+)$/g, '')
+    .replace(/(<br\/>\n){3,}/g, '<br/>\n<br/>\n')
     .trim()
 }
 
