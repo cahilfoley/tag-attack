@@ -792,13 +792,13 @@ let farewellMessages = [
     },
     {
         content: trimmed `
-      Hi FJ,
+      Hi Ayesha,
       
-      Thanks for all your time and help with SQL, SSRS, PowerBI.... well <span class='flashing'><em>everything!</em></span> You have been a great source of information and your input is always highly valued.
+      Thanks for all your help and support since I started. You have been great to work with and thanks for all the laughs.
       
-      I ran of out words and used them all on building this with <span class='flashing'>Cahil</span> . 
+      I hope your next team is as awesome as us and appreciate you as much as we do! You will be missed greatly.
       
-      Stay in touch and enjoy your game,
+      Good luck and keep on sipping,
       
       <span class='flashing'>Steve</span>
       `,
