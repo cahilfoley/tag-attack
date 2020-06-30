@@ -8,7 +8,7 @@ let farewellMessages: Message[] = [
     content: trimmed`
       Hola Matt!
 
-      I can’t believe you’re leaving me. It’s not fair. Who else will appreciate terrible pop culture references. No one. That’s who. Fine. Go. Bye Felicia.
+      I can't believe you're leaving me. It's not fair. Who else will appreciate terrible pop culture references. No one. That's who. Fine. Go. Bye Felicia.
       Despite my personal misery I wish you all the best in your next project and hope our paths cross again. Your expertise has been extremely valuable input into the team and we are in a much better place today because of it. The Koodaideri team will be very lucky to also share in your amazingness. Stay safe and classy.
       
       Boxy
