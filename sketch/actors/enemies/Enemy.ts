@@ -1,5 +1,11 @@
 /// <reference path="../Ship.ts"/>
 
+/** Used in derived classes for constructor props */
+interface EnemyProps {
+  vel: p5.Vector
+  pos: p5.Vector
+}
+
 interface EnemyConfig extends MoverConfig {
   name: string
   score: number
@@ -7,6 +13,8 @@ interface EnemyConfig extends MoverConfig {
   hitPoints: number
   fireRate: number
   sprite: p5.Image
+  /** Children will spawn from the enemy when it explodes */
+  children?: Enemy[]
 }
 
 class Enemy extends Ship {
@@ -15,8 +23,16 @@ class Enemy extends Ship {
   name: string
   score: number
   fireRate: number
+  children?: Enemy[]
 
-  constructor({ name, score, fireRate, sprite, ...config }: EnemyConfig) {
+  constructor({
+    name,
+    score,
+    fireRate,
+    sprite,
+    children,
+    ...config
+  }: EnemyConfig) {
     super({
       ...config,
       sprite,
@@ -28,6 +44,7 @@ class Enemy extends Ship {
     this.name = name
     this.score = score
     this.fireRate = fireRate
+    this.children = children
   }
 
   protected move() {
@@ -64,6 +81,10 @@ class Enemy extends Ship {
 
   explode() {
     smallExplosion.play()
+
+    if (this.children) {
+      enemies.push(...this.children)
+    }
   }
 
   draw() {

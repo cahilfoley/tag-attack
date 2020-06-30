@@ -2,7 +2,7 @@
 
 class Bullet extends SpriteMover {
   private static getSpriteImage() {
-    return random(tetrisImages)
+    return bulletImage
   }
 
   constructor(config: MoverConfig) {
@@ -25,7 +25,6 @@ class Bullet extends SpriteMover {
 
     translate(this.pos.x, this.pos.y)
     rotate(this.vel.heading())
-    rotate(PI / 2)
     super.draw({ x: 0, y: 0 })
 
     pop()

@@ -1,112 +1,88 @@
-/// <reference path="../actors/enemies/ChrisBoss.ts"/>
-/// <reference path="../actors/enemies/SteveBoss.ts"/>
-/// <reference path="../actors/enemies/Nero.ts"/>
-/// <reference path="../actors/enemies/Mug.ts"/>
-/// <reference path="../actors/enemies/Yahava.ts"/>
-/// <reference path="../actors/enemies/DH.ts"/>
-
-const yahavaCoffees = [
-  'Caffe Americano',
-  'Cafe Latte ',
-  'Cappuccino',
-  'Espresso',
-  'Flat White',
-  'Long Black',
-]
-
-const neroCoffees = [
-  'Macchiato',
-  'Piccolo Latte',
-  'Mochaccino',
-  'Vienna',
-  'Affogato',
-]
-
-const dhCoffees = [
-  'Cafe Latte ',
-  'Cappuccino',
-  'Espresso',
-  'Vienna',
-  'Fancy Pants Drip Coffee',
-]
-
-const mugCoffees = ['OC', 'LVL 17', 'Instant ']
+/// <reference path="../actors/enemies/basics.ts"/>
+/// <reference path="../actors/enemies/bosses.ts"/>
 
 const levels: RoundSettings[] = [
   {
     waves: [
       [
-        { enemy: YahavaEnemy, count: 3 },
-        { enemy: NeroEnemy, count: 2 },
+        { enemy: EssendonEnemy, count: 6 },
+        { enemy: PortEnemy, count: 4 },
       ],
     ],
   },
   {
     waves: [
       [
-        { enemy: YahavaEnemy, count: 7 },
-        { enemy: NeroEnemy, count: 2 },
+        { enemy: EssendonEnemy, count: 14 },
+        { enemy: PortEnemy, count: 4 },
       ],
     ],
   },
   {
-    waves: [[{ enemy: ChrisBossEnemy, count: 2 }]],
+    waves: [[{ enemy: ChrisBossEnemy, count: 4 }]],
   },
   {
     waves: [
       [
-        { enemy: YahavaEnemy, count: 3 },
-        { enemy: NeroEnemy, count: 2 },
-        { enemy: MugEnemy, count: 4 },
+        { enemy: EssendonEnemy, count: 6 },
+        { enemy: PortEnemy, count: 4 },
+        { enemy: DockersEnemy, count: 8 },
       ],
       [
-        { enemy: MugEnemy, count: 6 },
-        { enemy: DHEnemy, count: 4 },
+        { enemy: DockersEnemy, count: 12 },
+        { enemy: CollingwoodEnemy, count: 8 },
       ],
     ],
   },
   {
-    waves: [[{ enemy: SteveBossEnemy, count: 2 }]],
-  },
-  {
-    waves: [
-      [
-        { enemy: YahavaEnemy, count: 6 },
-        { enemy: NeroEnemy, count: 9 },
-        { enemy: MugEnemy, count: 5 },
-        { enemy: DHEnemy, count: 4 },
-      ],
-      [
-        { enemy: YahavaEnemy, count: 6 },
-        { enemy: NeroEnemy, count: 9 },
-        { enemy: MugEnemy, count: 5 },
-        { enemy: DHEnemy, count: 4 },
-      ],
-      [
-        { enemy: YahavaEnemy, count: 6 },
-        { enemy: NeroEnemy, count: 9 },
-        { enemy: MugEnemy, count: 5 },
-        { enemy: DHEnemy, count: 4 },
-      ],
-    ],
+    waves: [[{ enemy: SteveBossEnemy, count: 4 }]],
   },
   {
     waves: [
       [
-        { enemy: SteveBossEnemy, count: 4 },
-        { enemy: ChrisBossEnemy, count: 6 },
+        { enemy: EssendonEnemy, count: 12 },
+        { enemy: PortEnemy, count: 16 },
+        { enemy: DockersEnemy, count: 10 },
+        { enemy: CollingwoodEnemy, count: 8 },
+      ],
+      [
+        { enemy: EssendonEnemy, count: 12 },
+        { enemy: PortEnemy, count: 16 },
+        { enemy: DockersEnemy, count: 10 },
+        { enemy: CollingwoodEnemy, count: 8 },
+      ],
+      [
+        { enemy: EssendonEnemy, count: 12 },
+        { enemy: PortEnemy, count: 16 },
+        { enemy: DockersEnemy, count: 10 },
+        { enemy: CollingwoodEnemy, count: 8 },
       ],
     ],
   },
+  {
+    waves: [
+      [
+        { enemy: SteveBossEnemy, count: 6 },
+        { enemy: ChrisBossEnemy, count: 8 },
+      ],
+    ],
+  },
+]
+
+const messageActions = [
+  'jump on a Teams call with you',
+  'go a round of Fortnite with you',
+  'throw things at Collingwood supporters with you',
+  'discuss bruce with you',
 ]
 
 const messagePrefix = [
-  'Loud Sipper',
-  'Chief Sipper',
-  'Coffee Snob',
-  'Barista Wannabe',
+  'Adhoc Leech',
+  'Dockers Fan',
+  'Passport Enthusiast',
+  'Simpsons Lover',
 ]
 
-const chrisList = ['Just', 'Plain', 'Blend 43', 'Captain Scrum Overlord']
+const chrisList = ['Just', 'Plain', 'Captain Scrum Overlord']
 
 const bossName = ['Tin Foil Kid']

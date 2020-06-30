@@ -25,7 +25,8 @@ function showNextRoundMessage(
   font: p5.Font,
   roundNumber: number,
   message: Message,
-  prefix: string
+  prefix: string,
+  action: string
 ) {
   push()
   background(0, 150)
@@ -46,7 +47,7 @@ function showNextRoundMessage(
   messageContent.innerHTML = message.content
 
   const transmissionContent = document.getElementById('transmission')
-  transmissionContent.innerHTML = `${prefix} ${message.sender} wants to grab a coffee with you`
+  transmissionContent.innerHTML = `${prefix} ${message.sender} wants to ${action}`
 
   pop()
 }
@@ -59,7 +60,7 @@ function showGameTitle(font: p5.Font) {
   textFont(font)
   textSize(80)
   textStyle(BOLD)
-  text(`ayesha's coffee shot`, windowWidth / 2, 50)
+  text(`matt's tag attack`, windowWidth / 2, 50)
   pop()
 }
 
@@ -85,13 +86,16 @@ function showVictoryMessage(font: p5.Font, score: number) {
   strokeWeight(10)
   textSize(150)
   textSize(50)
-  text(`victory - well done`, windowWidth / 2, windowHeight / 2 - 75)
+  const imageWidth = windowWidth / 2
+  const imageHeight = imageWidth / 1.75
+  image(
+    victoryRoyaleImage,
+    windowWidth / 4,
+    windowHeight / 2 - imageHeight / 1.5,
+    imageWidth,
+    imageHeight
+  )
   textSize(50)
   text(`total score: ${score}`, windowWidth / 2, windowHeight / 2 + 50)
   pop()
-}
-
-function messages(font: p5.Font, message: Message) {
-  rect(windowWidth / 2, windowHeight / 2, 200, 200)
-  fill('lightGrey')
 }

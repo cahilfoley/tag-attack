@@ -99,7 +99,7 @@ button ion-icon {
 }
 
 span.flashing {
-  font-family: 'Pacifico', cursive;
+  font-family: 'MuseoModerno', cursive;
   -webkit-animation: h2 0.35s infinite;
   animation: flashing 0.35s infinite;
   font-size: 1.2rem;

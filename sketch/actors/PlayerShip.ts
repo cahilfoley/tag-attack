@@ -2,6 +2,7 @@
 
 class PlayerShip extends Ship {
   dragForce = 0.03
+  minFramesBetweenShots = 10
 
   lastShot = 0
 
@@ -12,7 +13,7 @@ class PlayerShip extends Ship {
       bulletVelocity: createVector(0, -10),
       bulletsSpawnFrom: BulletSpawnPosition.TOP,
       customLaserSound: playerLaserSound,
-      bulletsPerShot: 1,
+      bulletsPerShot: 5,
       hitPoints: 1,
     })
 
@@ -20,8 +21,10 @@ class PlayerShip extends Ship {
   }
 
   shoot() {
-    super.shoot()
-    this.lastShot = frameCount
+    if (frameCount - this.lastShot > this.minFramesBetweenShots) {
+      super.shoot()
+      this.lastShot = frameCount
+    }
     return this
   }
 

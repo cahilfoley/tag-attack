@@ -58,7 +58,7 @@ class SpriteMover extends Mover {
 }
 class Bullet extends SpriteMover {
     static getSpriteImage() {
-        return random(tetrisImages);
+        return bulletImage;
     }
     constructor(config) {
         super({ ...config, sprite: Bullet.getSpriteImage() });
@@ -74,7 +74,6 @@ class Bullet extends SpriteMover {
         push();
         translate(this.pos.x, this.pos.y);
         rotate(this.vel.heading());
-        rotate(PI / 2);
         super.draw({ x: 0, y: 0 });
         pop();
         return this;
@@ -141,8 +140,8 @@ class Ship extends SpriteMover {
             const bullet = new Bullet({
                 pos: bulletPosition,
                 vel: bulletVelocity,
-                height: 40,
-                width: 20,
+                height: 30,
+                width: 30,
             });
             this.bullets.push(bullet);
         }
@@ -153,7 +152,7 @@ class Ship extends SpriteMover {
     }
 }
 class Enemy extends Ship {
-    constructor({ name, score, fireRate, sprite, ...config }) {
+    constructor({ name, score, fireRate, sprite, children, ...config }) {
         super({
             ...config,
             sprite,
@@ -166,6 +165,7 @@ class Enemy extends Ship {
         this.name = name;
         this.score = score;
         this.fireRate = fireRate;
+        this.children = children;
     }
     move() {
         super.move();
@@ -194,6 +194,9 @@ class Enemy extends Ship {
     }
     explode() {
         smallExplosion.play();
+        if (this.children) {
+            enemies.push(...this.children);
+        }
     }
     draw() {
         super.draw();
@@ -224,16 +227,19 @@ class PlayerShip extends Ship {
             bulletVelocity: createVector(0, -10),
             bulletsSpawnFrom: 0,
             customLaserSound: playerLaserSound,
-            bulletsPerShot: 1,
+            bulletsPerShot: 5,
             hitPoints: 1,
         });
         this.dragForce = 0.03;
+        this.minFramesBetweenShots = 10;
         this.lastShot = 0;
         this.vel.limit(1);
     }
     shoot() {
-        super.shoot();
-        this.lastShot = frameCount;
+        if (frameCount - this.lastShot > this.minFramesBetweenShots) {
+            super.shoot();
+            this.lastShot = frameCount;
+        }
         return this;
     }
     move() {
@@ -277,7 +283,7 @@ function showGameOverMessage(font, score, killedBy) {
     text(`You were killed by: ${killedBy}`, windowWidth / 2, windowHeight / 2 + 125);
     pop();
 }
-function showNextRoundMessage(font, roundNumber, message, prefix) {
+function showNextRoundMessage(font, roundNumber, message, prefix, action) {
     push();
     background(0, 150);
     fill(255);
@@ -292,7 +298,7 @@ function showNextRoundMessage(font, roundNumber, message, prefix) {
     messageBox.classList.remove('hidden');
     messageContent.innerHTML = message.content;
     const transmissionContent = document.getElementById('transmission');
-    transmissionContent.innerHTML = `${prefix} ${message.sender} wants to grab a coffee with you`;
+    transmissionContent.innerHTML = `${prefix} ${message.sender} wants to ${action}`;
     pop();
 }
 function showGameTitle(font) {
@@ -303,7 +309,7 @@ function showGameTitle(font) {
     textFont(font);
     textSize(80);
     textStyle(BOLD);
-    text(`ayesha's coffee shot`, windowWidth / 2, 50);
+    text(`matt's tag attack`, windowWidth / 2, 50);
     pop();
 }
 function showScore(font, score) {
@@ -327,14 +333,100 @@ function showVictoryMessage(font, score) {
     strokeWeight(10);
     textSize(150);
     textSize(50);
-    text(`victory - well done`, windowWidth / 2, windowHeight / 2 - 75);
+    const imageWidth = windowWidth / 2;
+    const imageHeight = imageWidth / 1.75;
+    image(victoryRoyaleImage, windowWidth / 4, windowHeight / 2 - imageHeight / 1.5, imageWidth, imageHeight);
     textSize(50);
     text(`total score: ${score}`, windowWidth / 2, windowHeight / 2 + 50);
     pop();
 }
-function messages(font, message) {
-    rect(windowWidth / 2, windowHeight / 2, 200, 200);
-    fill('lightGrey');
+class CollingwoodEnemy extends Enemy {
+    constructor({ pos, vel }) {
+        super({
+            name: random([
+                'Scott Pendlebury',
+                'Steele Sidebottom',
+                'Jeremy Howe',
+                'Taylor Adams',
+                'Ben Reid',
+            ]),
+            pos,
+            vel,
+            sprite: enemyImage.collingwood,
+            hitPoints: 2,
+            fireRate: 0.5,
+            bulletsPerShot: 1,
+            score: 150,
+            height: 50,
+            width: 50,
+        });
+    }
+}
+class DockersEnemy extends Enemy {
+    constructor({ pos, vel }) {
+        super({
+            name: random([
+                'Nat Fyfe',
+                'Brennan Cox',
+                'Adam Cerra',
+                'Caleb Serong',
+                'Hayden Young',
+            ]),
+            pos,
+            vel: vel.mult(2),
+            sprite: enemyImage.dockers,
+            hitPoints: 1,
+            fireRate: 0.5,
+            bulletsPerShot: 1,
+            score: 100,
+            height: 50,
+            width: 50,
+        });
+    }
+}
+class PortEnemy extends Enemy {
+    constructor({ pos, vel }) {
+        super({
+            name: random([
+                'Tom Jonas',
+                'Ollie Wines',
+                'Travis Boak',
+                'Connor Rozee',
+                'Trent McKenzie',
+            ]),
+            pos,
+            vel,
+            sprite: enemyImage.port,
+            hitPoints: 2,
+            fireRate: 0.5,
+            bulletsPerShot: 1,
+            score: 200,
+            height: 50,
+            width: 50,
+        });
+    }
+}
+class EssendonEnemy extends Enemy {
+    constructor({ pos, vel }) {
+        super({
+            name: random([
+                'Dyson Heppell',
+                'Cale Hooker',
+                'Kyle Langford',
+                'Martin Gleeson',
+                'Zach Merrett',
+            ]),
+            pos,
+            vel: vel.mult(2),
+            sprite: enemyImage.essendon,
+            hitPoints: 1,
+            fireRate: 0.5,
+            bulletsPerShot: 1,
+            score: 100,
+            height: 50,
+            width: 50,
+        });
+    }
 }
 class ChrisBossEnemy extends Enemy {
     constructor({ pos, vel }) {
@@ -374,168 +466,118 @@ class SteveBossEnemy extends Enemy {
         bossExplosion.play();
     }
 }
-class NeroEnemy extends Enemy {
-    constructor({ pos, vel }) {
-        super({
-            name: random(neroCoffees),
-            pos,
-            vel,
-            sprite: enemyImage.nero,
-            hitPoints: 2,
-            fireRate: 0.5,
-            bulletsPerShot: 1,
-            score: 200,
-            height: 50,
-            width: 50,
-        });
-    }
-}
-class MugEnemy extends Enemy {
-    constructor({ pos, vel }) {
-        super({
-            name: random(mugCoffees),
-            pos,
-            vel: vel.mult(2),
-            sprite: enemyImage.mug,
-            hitPoints: 1,
-            fireRate: 0.5,
-            bulletsPerShot: 1,
-            score: 100,
-            height: 50,
-            width: 50,
-        });
-    }
-}
-class YahavaEnemy extends Enemy {
-    constructor({ pos, vel }) {
-        super({
-            name: random(yahavaCoffees),
-            pos,
-            vel: vel.mult(2),
-            sprite: enemyImage.yahava,
-            hitPoints: 1,
-            fireRate: 0.5,
-            bulletsPerShot: 1,
-            score: 100,
-            height: 50,
-            width: 50,
-        });
-    }
-}
-class DHEnemy extends Enemy {
-    constructor({ pos, vel }) {
-        super({
-            name: random(dhCoffees),
-            pos,
-            vel,
-            sprite: enemyImage.dh,
-            hitPoints: 2,
-            fireRate: 0.5,
-            bulletsPerShot: 1,
-            score: 150,
-            height: 50,
-            width: 50,
-        });
-    }
-}
-const yahavaCoffees = [
-    'Caffe Americano',
-    'Cafe Latte ',
-    'Cappuccino',
-    'Espresso',
-    'Flat White',
-    'Long Black',
-];
-const neroCoffees = [
-    'Macchiato',
-    'Piccolo Latte',
-    'Mochaccino',
-    'Vienna',
-    'Affogato',
-];
-const dhCoffees = [
-    'Cafe Latte ',
-    'Cappuccino',
-    'Espresso',
-    'Vienna',
-    'Fancy Pants Drip Coffee',
-];
-const mugCoffees = ['OC', 'LVL 17', 'Instant '];
 const levels = [
     {
         waves: [
             [
-                { enemy: YahavaEnemy, count: 3 },
-                { enemy: NeroEnemy, count: 2 },
+                { enemy: EssendonEnemy, count: 6 },
+                { enemy: PortEnemy, count: 4 },
             ],
         ],
     },
     {
         waves: [
             [
-                { enemy: YahavaEnemy, count: 7 },
-                { enemy: NeroEnemy, count: 2 },
+                { enemy: EssendonEnemy, count: 14 },
+                { enemy: PortEnemy, count: 4 },
             ],
         ],
     },
     {
-        waves: [[{ enemy: ChrisBossEnemy, count: 2 }]],
+        waves: [[{ enemy: ChrisBossEnemy, count: 4 }]],
     },
     {
         waves: [
             [
-                { enemy: YahavaEnemy, count: 3 },
-                { enemy: NeroEnemy, count: 2 },
-                { enemy: MugEnemy, count: 4 },
+                { enemy: EssendonEnemy, count: 6 },
+                { enemy: PortEnemy, count: 4 },
+                { enemy: DockersEnemy, count: 8 },
             ],
             [
-                { enemy: MugEnemy, count: 6 },
-                { enemy: DHEnemy, count: 4 },
+                { enemy: DockersEnemy, count: 12 },
+                { enemy: CollingwoodEnemy, count: 8 },
             ],
         ],
     },
     {
-        waves: [[{ enemy: SteveBossEnemy, count: 2 }]],
-    },
-    {
-        waves: [
-            [
-                { enemy: YahavaEnemy, count: 6 },
-                { enemy: NeroEnemy, count: 9 },
-                { enemy: MugEnemy, count: 5 },
-                { enemy: DHEnemy, count: 4 },
-            ],
-            [
-                { enemy: YahavaEnemy, count: 6 },
-                { enemy: NeroEnemy, count: 9 },
-                { enemy: MugEnemy, count: 5 },
-                { enemy: DHEnemy, count: 4 },
-            ],
-            [
-                { enemy: YahavaEnemy, count: 6 },
-                { enemy: NeroEnemy, count: 9 },
-                { enemy: MugEnemy, count: 5 },
-                { enemy: DHEnemy, count: 4 },
-            ],
-        ],
+        waves: [[{ enemy: SteveBossEnemy, count: 4 }]],
     },
     {
         waves: [
             [
-                { enemy: SteveBossEnemy, count: 4 },
-                { enemy: ChrisBossEnemy, count: 6 },
+                { enemy: EssendonEnemy, count: 12 },
+                { enemy: PortEnemy, count: 16 },
+                { enemy: DockersEnemy, count: 10 },
+                { enemy: CollingwoodEnemy, count: 8 },
+            ],
+            [
+                { enemy: EssendonEnemy, count: 12 },
+                { enemy: PortEnemy, count: 16 },
+                { enemy: DockersEnemy, count: 10 },
+                { enemy: CollingwoodEnemy, count: 8 },
+            ],
+            [
+                { enemy: EssendonEnemy, count: 12 },
+                { enemy: PortEnemy, count: 16 },
+                { enemy: DockersEnemy, count: 10 },
+                { enemy: CollingwoodEnemy, count: 8 },
             ],
         ],
     },
+    {
+        waves: [
+            [
+                { enemy: SteveBossEnemy, count: 6 },
+                { enemy: ChrisBossEnemy, count: 8 },
+            ],
+        ],
+    },
+];
+const messageActions = [
+    'jump on a Teams call with you',
+    'go a round of Fortnite with you',
+    'throw things at Collingwood supporters with you',
+    'discuss bruce with you',
 ];
 const messagePrefix = [
-    'Loud Sipper',
-    'Chief Sipper',
-    'Coffee Snob',
-    'Barista Wannabe',
+    'Adhoc Leech',
+    'Dockers Fan',
+    'Passport Enthusiast',
+    'Simpsons Lover',
 ];
-const chrisList = ['Just', 'Plain', 'Blend 43', 'Captain Scrum Overlord'];
+const chrisList = ['Just', 'Plain', 'Captain Scrum Overlord'];
 const bossName = ['Tin Foil Kid'];
+class GamepadController {
+    constructor() {
+        this.controllerIndexes = [];
+        this.registerController = (event) => {
+            this.controllerIndexes.push(event.gamepad.index);
+        };
+        this.unregisterController = (event) => {
+            this.controllerIndexes = this.controllerIndexes.filter((x) => x !== event.gamepad.index);
+        };
+    }
+    get controllers() {
+        const gamepads = navigator.getGamepads();
+        return this.controllerIndexes.map((i) => gamepads[i]);
+    }
+    get analogueStickVector() {
+        return this.controllers.reduce((vector, controller) => vector.add(controller.axes[0], controller.axes[1]), createVector());
+    }
+    isButtonPressed(index) {
+        return this.controllers.some((controller) => { var _a; return (_a = controller.buttons[index]) === null || _a === void 0 ? void 0 : _a.pressed; });
+    }
+    registerListeners() {
+        this.unregisterListeners();
+        window.addEventListener('gamepadconnected', this.registerController);
+        window.addEventListener('gamepaddisconnected', this.unregisterController);
+    }
+    unregisterListeners() {
+        window.removeEventListener('gamepadconnected', this.registerController);
+        window.removeEventListener('gamepaddisconnected', this.unregisterController);
+    }
+}
+const gamepadController = new GamepadController();
 let enemies;
 let gameOver;
 let killedBy;
@@ -543,6 +585,7 @@ let nextRound;
 let victory;
 let farewellMessage;
 let senderPrefix;
+let senderAction;
 let roundNumber;
 let roundEnded;
 let ship;
@@ -551,7 +594,8 @@ let enemyShip;
 let playerShip;
 let playerShipShooting;
 let enemyImage;
-let tetrisImages;
+let bulletImage;
+let victoryRoyaleImage;
 let titleFont;
 let regularFont;
 let laserSound;
@@ -566,26 +610,30 @@ let score;
 let buttons;
 function preload() {
     enemyImage = {
-        dh: loadImage('images/dh.png'),
-        nero: loadImage('images/nero.png'),
-        mug: loadImage('images/mug.png'),
-        yahava: loadImage('images/yahava.png'),
+        collingwood: loadImage('images/collingwood.svg'),
+        dockers: loadImage('images/dockers.svg'),
+        port: loadImage('images/port-adelaide.svg'),
+        essendon: loadImage('images/essendon.svg'),
         steve: loadImage('images/steves-head.png'),
         chris: loadImage('images/chris-head.png'),
     };
     playerShip = loadImage('images/player.png');
     playerShipShooting = loadImage('images/player-shooting.png');
-    backgroundImage = loadImage('images/background.jpg');
-    tetrisImages = Array.from({ length: 7 }).map((_, i) => loadImage(`images/tetris-${i}.png`));
+    backgroundImage = loadImage('images/background.png');
+    bulletImage = loadImage('images/bullet.png');
+    victoryRoyaleImage = loadImage('images/victory-royale.png');
     titleFont = loadFont('fonts/StarJedi.ttf');
     regularFont = loadFont('fonts/OpenSans-Regular.ttf');
     laserSound = new p5.SoundFile('sounds/laser.wav');
     playerLaserSound = new p5.SoundFile('sounds/pew.wav');
-    explosionSound = new p5.SoundFile('sounds/boom.wav');
-    music = new p5.SoundFile('sounds/tetris-theme.mp3');
-    smallExplosion = new p5.SoundFile('sounds/slurp.wav');
+    explosionSound = new p5.SoundFile('sounds/roblox-death-sound-trimmed.mp3');
+    music = new p5.SoundFile('sounds/west-coast-theme.mp3');
+    smallExplosion = new p5.SoundFile('sounds/small-explosion.wav');
     bossExplosion = new p5.SoundFile('sounds/boss-explosion.wav');
-    roundEndSounds = Array.from({ length: 5 }).map((_, i) => new p5.SoundFile(`sounds/coffee-voice-${i}.mp3`));
+    roundEndSounds = [
+        new p5.SoundFile(`sounds/my-man.mp3`),
+        new p5.SoundFile(`sounds/mlg-airhorn.mp3`),
+    ];
     sounds = [
         { file: laserSound, volume: 0.3 },
         { file: playerLaserSound, volume: 0.3 },
@@ -593,7 +641,7 @@ function preload() {
         { file: music, volume: 0.1 },
         { file: smallExplosion, volume: 1 },
         { file: bossExplosion, volume: 1 },
-        ...roundEndSounds.map((file) => ({ file, volume: 1 })),
+        ...roundEndSounds.map((file) => ({ file, volume: 0.5 })),
     ];
     sounds.forEach((sound) => sound.file.setVolume(sound.volume));
 }
@@ -614,7 +662,6 @@ function startRound(settings) {
             let yPosition = ySpacing * waveNumber * 10;
             enemies.push(new allEnemies[i]({
                 pos: createVector(xPosition, -yPosition * random(0.8, 1.2) - 400),
-                name: random(yahavaCoffees),
                 vel: createVector(random(-1, 1), random(0.5, 2)),
             }));
         }
@@ -624,6 +671,7 @@ function setup() {
     farewellMessages = shuffle(farewellMessages);
     angleMode(RADIANS);
     textAlign(CENTER, CENTER);
+    gamepadController.registerListeners();
     createCanvas(windowWidth, windowHeight);
     rectMode(CORNER);
     gameOver = false;
@@ -639,6 +687,11 @@ function setup() {
     startRound(levels[0]);
 }
 function draw() {
+    background(backgroundImage);
+    background(0, 150);
+    if (gamepadController.controllers.some(({ buttons }) => buttons[0].pressed)) {
+        handleKeyPress(' ');
+    }
     if (music.isLoaded() && !music.isPlaying()) {
         music.setVolume(0.1);
         music.loop();
@@ -656,12 +709,10 @@ function draw() {
             return;
         }
         else {
-            showNextRoundMessage(titleFont, roundNumber, farewellMessage, senderPrefix);
+            showNextRoundMessage(titleFont, roundNumber, farewellMessage, senderPrefix, senderAction);
             return;
         }
     }
-    background(backgroundImage);
-    background(0, 150);
     showGameTitle(titleFont);
     showScore(titleFont, score);
     if (keyIsDown(LEFT_ARROW))
@@ -672,6 +723,7 @@ function draw() {
         ship.moveRight();
     if (keyIsDown(DOWN_ARROW))
         ship.moveDown();
+    ship.applyForce(gamepadController.analogueStickVector);
     ship.update().draw();
     const newEnemies = [];
     for (const enemy of enemies) {
@@ -702,16 +754,22 @@ function draw() {
         roundNumber++;
         farewellMessage = farewellMessages[roundNumber % farewellMessages.length];
         senderPrefix =
-            farewellMessage.sender == 'Boxy'
-                ? random(chrisList)
-                : random(messagePrefix);
+            farewellMessage.sender == 'Bruce'
+                ? ''
+                : farewellMessage.sender == 'Boxy'
+                    ? random(chrisList)
+                    : random(messagePrefix);
+        senderAction =
+            farewellMessage.sender == 'Bruce'
+                ? 'wants to do with you'
+                : random(messageActions);
         nextRound = true;
         buttons.continueButton.classList.remove('hidden');
     }
     enemies = newEnemies;
 }
 let chainingSecret = false;
-function keyPressed() {
+function handleKeyPress(key) {
     if (key === ' ') {
         if (nextRound) {
             if (Date.now() - roundEnded > 500) {
@@ -738,6 +796,9 @@ function keyPressed() {
     else {
         chainingSecret = false;
     }
+}
+function keyPressed() {
+    handleKeyPress(key);
 }
 function setupButtons() {
     const muteButton = document.getElementById('mute');
@@ -767,123 +828,100 @@ function setupButtons() {
 let farewellMessages = [
     {
         content: trimmed `
-      Hey Ayesha, sad to hear that you are leaving the team.
+      Hola Matt!
+
+      I can’t believe you’re leaving me. It’s not fair. Who else will appreciate terrible pop culture references. No one. That’s who. Fine. Go. Bye Felicia.
+      Despite my personal misery I wish you all the best in your next project and hope our paths cross again. Your expertise has been extremely valuable input into the team and we are in a much better place today because of it. The Koodaideri team will be very lucky to also share in your amazingness. Stay safe and classy.
       
-      We didn’t work together, but who else would I talk to about the new bbt place that I’ve tried over the weekend or how crappy the shopping is in perth.
-      Will miss having you around!
-      
-      KIT and hope to see you around with a milk tea in hand ;-)
+      Boxy
     `,
-        sender: 'Gabrielle',
+        sender: 'Boxy',
     },
     {
         content: trimmed `
-      Hi Ayesha,
-      
-      It was a pleasure working with you. All the very best. Take care and stay safe.
-      
-      Cheers
-      Sharief
-    `,
-        sender: 'Sharief',
-    },
-    {
-        content: trimmed `
-      Hey Ayesha
-      
-      Going to miss having you in the team, a fellow chick who knew how to cook and loved to talk hair, fashion and other girlie stuff with a this frumpie mum are very hard to find. Your help over the months has been invaluable as has been the friendship
-      
-      Cheers Amanda    
+      Thanks for the laughs, the reboot card saves and hopefully you can still join for some team building
     `,
         sender: 'Amanda',
     },
     {
         content: trimmed `
-      Hey Ayesha!
+      Best Wishes on your pregnancy   
+    `,
+        sender: 'Aiden',
+    },
+    {
+        content: trimmed `
+      Hi Matt,
+  
+      Its been really good working with you, appreciate the work and contributions you have made to the team.
+      Shame i didn't get to work with you much but im sure you are pretty scared when you set the bar really high with the tagging stuff.
       
-      Sad to “virtually” see you go! Definitely know it won’t be the last time we see each other! It’s been great working with you on some mentally challenging projects hahaha
-      In hindsight i should of come met Yufei with you, Big regrets! Lets catch up for drinks when this is all over :D
+      Best of luck in the future, im sure we will together again
       
-      All the best
+      Thanks,
       Kent
     `,
         sender: 'Kent',
     },
     {
         content: trimmed `
-      Hi PowerBI Guru,
+      Matt Matt Matt,
+
+      It was such a pleasure working with you and having you in the team.
+      Thank you heaps for your great work and contributions in helping us improve Passport.
+      You will be missed but I'm sure we will see you again since Perth is small.
+      I wish you all the best for the Koodaideri project and other projects you will be working on.
       
-      It was such a great pleasure working with you. 
-      Thank you heaps for the tremendous contribution and support you brought to the team, including me.
-      We have definitely learnt a lot from you, especially the PowerBI tricks, and have enjoyed working with you.
-      Thanks for helping me out with organising some gatherings with the team. I will miss buying doughnuts with you  
-      Perth is small and I’m sure we will cross paths again on future projects or even, outside work…who knows  
-      Btw, I’m still waiting for your dancing video  
-      
-      I wish you all the best in your other projects.
-      
-      Take care,
+      Stay safe and Take care,
       Tina
     `,
         sender: 'Tinaaaaaaaaaaaaaaaaa',
     },
     {
         content: trimmed `
-      Hi Ayesha,
-      
-      Thanks for all your help and support since I started. You have been great to work with and thanks for all the laughs.
-      
-      I hope your next team is as awesome as us and appreciate you as much as we do! You will be missed greatly.
-      
-      Good luck and keep on sipping,
-      
-      <span class='flashing'>Steve</span>
-      `,
-        sender: `<span class='flashing'>Steve</span>`,
+      Hey Matt,
+      Thanks for all your help over the last 9+ months. It has been great to have your positive attitude around the office especially when working on the new and complex parts of webcore. Your sense of humor will be missed and good luck with your next project!
+      Cheers,
+      Steve
+    `,
+        sender: `Steve`,
     },
     {
         content: trimmed `
-      Hey Ayesha,
+      Hey Matt,
       
-      So sad to see you're leaving - I'm going to miss learning loads of interesting pop culture facts at lunch.
+      It's been a please working with you, you're a quick learner and you've made some awesome contributions!
       
-      You've been an absolute star in the team, no matter what came up you just take in in stride, wherever you're headed next they are lucky to have you!
+      Thanks for carrying the squad and I in Fortnite, we'll have to keep you around for the lunch hour of power if we want to have any chance of winning again.
       
-      All the best for everything the future holds, I hope our we see you around again one day!
-      
+      All the best,
       <span class='flashing'>Cahil</span>
     `,
         sender: `<span class='flashing'>Cahil</span>`,
     },
     {
         content: trimmed `
-      Thanks for your commitment and persistence.
-
-      You always find a way to get it done.
+      Matt you are a great team member and helped us with progressing PASSPORT further.
+      
+      Thanks and keep in touch
     `,
-        sender: 'Fredy',
+        sender: 'Prateek',
     },
     {
         content: trimmed `
-      Hi Ayesha,
+      Matt, thanks for all of your support during some crazy times!
       
-      Thanks for your contribution to L&H reporting improvements. All the best for your new chapter!
+      Looking forward to working with you again in the future if the opportunity arises.
       
-      Cheers,
-      Ginger    
+      All the best!   
     `,
-        sender: 'Ginger',
+        sender: 'Matt (no not you silly, Matt Paps)',
     },
     {
         content: trimmed `
-      Hey Ayesha!
-
-      Thank you for all the hard work you’ve put in, the laughs, and most of all putting up with me :D I hope your next project goes smooth and that we cross paths again sooner rather than later. You’re always welcome for noodles. 
-      
-      Cheers,
-      Boxy    
+      Do
     `,
-        sender: 'Boxy',
+        sender: 'Bruce',
     },
 ];
 function trimLines(string) {

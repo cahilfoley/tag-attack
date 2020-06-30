@@ -2,6 +2,9 @@
 /// <reference path="actors/PlayerShip.ts"/>
 /// <reference path="misc/text.ts"/>
 /// <reference path="misc/data.ts"/>
+/// <reference path="misc/GamepadController.ts" />
+
+const gamepadController = new GamepadController()
 
 let enemies: Enemy[]
 let gameOver: boolean
@@ -10,6 +13,7 @@ let nextRound: boolean
 let victory: boolean
 let farewellMessage: Message
 let senderPrefix: string
+let senderAction: string
 let roundNumber: number
 let roundEnded: number
 
@@ -19,7 +23,8 @@ let enemyShip: p5.Image
 let playerShip: p5.Image
 let playerShipShooting: p5.Image
 let enemyImage: Record<string, p5.Image>
-let tetrisImages: p5.Image[]
+let bulletImage: p5.Image
+let victoryRoyaleImage: p5.Image
 
 let titleFont: p5.Font
 let regularFont: p5.Font
@@ -46,19 +51,18 @@ let buttons: ReturnType<typeof setupButtons>
 function preload() {
   // Images
   enemyImage = {
-    dh: loadImage('images/dh.png'),
-    nero: loadImage('images/nero.png'),
-    mug: loadImage('images/mug.png'),
-    yahava: loadImage('images/yahava.png'),
+    collingwood: loadImage('images/collingwood.svg'),
+    dockers: loadImage('images/dockers.svg'),
+    port: loadImage('images/port-adelaide.svg'),
+    essendon: loadImage('images/essendon.svg'),
     steve: loadImage('images/steves-head.png'),
     chris: loadImage('images/chris-head.png'),
   }
   playerShip = loadImage('images/player.png')
   playerShipShooting = loadImage('images/player-shooting.png')
-  backgroundImage = loadImage('images/background.jpg')
-  tetrisImages = Array.from({ length: 7 }).map((_, i) =>
-    loadImage(`images/tetris-${i}.png`)
-  )
+  backgroundImage = loadImage('images/background.png')
+  bulletImage = loadImage('images/bullet.png')
+  victoryRoyaleImage = loadImage('images/victory-royale.png')
 
   // Fonts
   titleFont = loadFont('fonts/StarJedi.ttf')
@@ -67,13 +71,14 @@ function preload() {
   // Sounds
   laserSound = new p5.SoundFile('sounds/laser.wav')
   playerLaserSound = new p5.SoundFile('sounds/pew.wav')
-  explosionSound = new p5.SoundFile('sounds/boom.wav')
-  music = new p5.SoundFile('sounds/tetris-theme.mp3')
-  smallExplosion = new p5.SoundFile('sounds/slurp.wav')
+  explosionSound = new p5.SoundFile('sounds/roblox-death-sound-trimmed.mp3')
+  music = new p5.SoundFile('sounds/west-coast-theme.mp3')
+  smallExplosion = new p5.SoundFile('sounds/small-explosion.wav')
   bossExplosion = new p5.SoundFile('sounds/boss-explosion.wav')
-  roundEndSounds = Array.from({ length: 5 }).map(
-    (_, i) => new p5.SoundFile(`sounds/coffee-voice-${i}.mp3`)
-  )
+  roundEndSounds = [
+    new p5.SoundFile(`sounds/my-man.mp3`),
+    new p5.SoundFile(`sounds/mlg-airhorn.mp3`),
+  ]
 
   sounds = [
     { file: laserSound, volume: 0.3 },
@@ -82,7 +87,7 @@ function preload() {
     { file: music, volume: 0.1 },
     { file: smallExplosion, volume: 1 },
     { file: bossExplosion, volume: 1 },
-    ...roundEndSounds.map((file) => ({ file, volume: 1 })),
+    ...roundEndSounds.map((file) => ({ file, volume: 0.5 })),
   ]
 
   sounds.forEach((sound) => sound.file.setVolume(sound.volume))
@@ -126,12 +131,11 @@ function startRound(settings: RoundSettings) {
     )
     for (let i = 0; i < allEnemies.length; i++) {
       let xPosition = xSpacing * i + xPadding
-      let yPosition = ySpacing * waveNumber * 10
+      let yPosition = ySpacing * waveNumber * 6
 
       enemies.push(
         new allEnemies[i]({
           pos: createVector(xPosition, -yPosition * random(0.8, 1.2) - 400),
-          name: random(yahavaCoffees),
           vel: createVector(random(-1, 1), random(0.5, 2)),
         })
       )
@@ -143,6 +147,7 @@ function setup() {
   farewellMessages = shuffle(farewellMessages)
   angleMode(RADIANS)
   textAlign(CENTER, CENTER)
+  gamepadController.registerListeners()
 
   createCanvas(windowWidth, windowHeight)
   rectMode(CORNER)
@@ -163,6 +168,13 @@ function setup() {
 }
 
 function draw() {
+  background(backgroundImage)
+  background(0, 150)
+
+  if (gamepadController.controllers.some(({ buttons }) => buttons[0].pressed)) {
+    handleKeyPress(' ')
+  }
+
   if (music.isLoaded() && !music.isPlaying()) {
     music.setVolume(0.1)
     music.loop()
@@ -185,14 +197,13 @@ function draw() {
         titleFont,
         roundNumber,
         farewellMessage,
-        senderPrefix
+        senderPrefix,
+        senderAction
       )
       return
     }
   }
 
-  background(backgroundImage)
-  background(0, 150)
   showGameTitle(titleFont)
   showScore(titleFont, score)
 
@@ -200,6 +211,7 @@ function draw() {
   if (keyIsDown(UP_ARROW)) ship.moveUp()
   if (keyIsDown(RIGHT_ARROW)) ship.moveRight()
   if (keyIsDown(DOWN_ARROW)) ship.moveDown()
+  ship.applyForce(gamepadController.analogueStickVector)
 
   ship.update().draw()
 
@@ -242,9 +254,16 @@ function draw() {
     farewellMessage = farewellMessages[roundNumber % farewellMessages.length]
 
     senderPrefix =
-      farewellMessage.sender == 'Boxy'
+      farewellMessage.sender == 'Bruce'
+        ? ''
+        : farewellMessage.sender == 'Boxy'
         ? random(chrisList)
         : random(messagePrefix)
+
+    senderAction =
+      farewellMessage.sender == 'Bruce'
+        ? 'wants to do with you'
+        : random(messageActions)
 
     nextRound = true
     buttons.continueButton.classList.remove('hidden')
@@ -255,7 +274,7 @@ function draw() {
 
 let chainingSecret = false
 
-function keyPressed() {
+function handleKeyPress(key: string) {
   if (key === ' ') {
     if (nextRound) {
       // Can move to the next round with spacebar after a small delay
@@ -278,4 +297,8 @@ function keyPressed() {
   } else {
     chainingSecret = false
   }
+}
+
+function keyPressed() {
+  handleKeyPress(key)
 }

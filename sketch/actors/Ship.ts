@@ -101,8 +101,8 @@ class Ship extends SpriteMover {
       const bullet = new Bullet({
         pos: bulletPosition,
         vel: bulletVelocity,
-        height: 40,
-        width: 20,
+        height: 30,
+        width: 30,
       })
 
       this.bullets.push(bullet)

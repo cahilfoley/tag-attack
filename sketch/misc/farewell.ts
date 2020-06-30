@@ -6,122 +6,99 @@ interface Message {
 let farewellMessages: Message[] = [
   {
     content: trimmed`
-      Hey Ayesha, sad to hear that you are leaving the team.
+      Hola Matt!
+
+      I can’t believe you’re leaving me. It’s not fair. Who else will appreciate terrible pop culture references. No one. That’s who. Fine. Go. Bye Felicia.
+      Despite my personal misery I wish you all the best in your next project and hope our paths cross again. Your expertise has been extremely valuable input into the team and we are in a much better place today because of it. The Koodaideri team will be very lucky to also share in your amazingness. Stay safe and classy.
       
-      We didn’t work together, but who else would I talk to about the new bbt place that I’ve tried over the weekend or how crappy the shopping is in perth.
-      Will miss having you around!
-      
-      KIT and hope to see you around with a milk tea in hand ;-)
+      Boxy
     `,
-    sender: 'Gabrielle',
+    sender: 'Boxy',
   },
   {
     content: trimmed`
-      Hi Ayesha,
-      
-      It was a pleasure working with you. All the very best. Take care and stay safe.
-      
-      Cheers
-      Sharief
-    `,
-    sender: 'Sharief',
-  },
-  {
-    content: trimmed`
-      Hey Ayesha
-      
-      Going to miss having you in the team, a fellow chick who knew how to cook and loved to talk hair, fashion and other girlie stuff with a this frumpie mum are very hard to find. Your help over the months has been invaluable as has been the friendship
-      
-      Cheers Amanda    
+      Thanks for the laughs, the reboot card saves and hopefully you can still join for some team building
     `,
     sender: 'Amanda',
   },
   {
     content: trimmed`
-      Hey Ayesha!
+      Best Wishes on your pregnancy   
+    `,
+    sender: 'Aiden',
+  },
+  {
+    content: trimmed`
+      Hi Matt,
+  
+      Its been really good working with you, appreciate the work and contributions you have made to the team.
+      Shame i didn't get to work with you much but im sure you are pretty scared when you set the bar really high with the tagging stuff.
       
-      Sad to “virtually” see you go! Definitely know it won’t be the last time we see each other! It’s been great working with you on some mentally challenging projects hahaha
-      In hindsight i should of come met Yufei with you, Big regrets! Lets catch up for drinks when this is all over :D
+      Best of luck in the future, im sure we will together again
       
-      All the best
+      Thanks,
       Kent
     `,
     sender: 'Kent',
   },
   {
     content: trimmed`
-      Hi PowerBI Guru,
+      Matt Matt Matt,
+
+      It was such a pleasure working with you and having you in the team.
+      Thank you heaps for your great work and contributions in helping us improve Passport.
+      You will be missed but I'm sure we will see you again since Perth is small.
+      I wish you all the best for the Koodaideri project and other projects you will be working on.
       
-      It was such a great pleasure working with you. 
-      Thank you heaps for the tremendous contribution and support you brought to the team, including me.
-      We have definitely learnt a lot from you, especially the PowerBI tricks, and have enjoyed working with you.
-      Thanks for helping me out with organising some gatherings with the team. I will miss buying doughnuts with you  
-      Perth is small and I’m sure we will cross paths again on future projects or even, outside work…who knows  
-      Btw, I’m still waiting for your dancing video  
-      
-      I wish you all the best in your other projects.
-      
-      Take care,
+      Stay safe and Take care,
       Tina
     `,
     sender: 'Tinaaaaaaaaaaaaaaaaa',
   },
   {
     content: trimmed`
-      Hi Ayesha,
-      
-      Thanks for all your help and support since I started. You have been great to work with and thanks for all the laughs.
-      
-      I hope your next team is as awesome as us and appreciate you as much as we do! You will be missed greatly.
-      
-      Good luck and keep on sipping,
-      
-      <span class='flashing'>Steve</span>
-      `,
-    sender: `<span class='flashing'>Steve</span>`,
+      Hey Matt,
+      Thanks for all your help over the last 9+ months. It has been great to have your positive attitude around the office especially when working on the new and complex parts of webcore. Your sense of humor will be missed and good luck with your next project!
+      Cheers,
+      Steve
+    `,
+    sender: `Steve`,
   },
   {
     content: trimmed`
-      Hey Ayesha,
+      Hey Matt,
       
-      So sad to see you're leaving - I'm going to miss learning loads of interesting pop culture facts at lunch.
+      It's been a please working with you, you're a quick learner and you've made some awesome contributions!
       
-      You've been an absolute star in the team, no matter what came up you just take in in stride, wherever you're headed next they are lucky to have you!
+      Thanks for carrying the squad and I in Fortnite, we'll have to keep you around for the lunch hour of power if we want to have any chance of winning again.
       
-      All the best for everything the future holds, I hope our we see you around again one day!
-      
+      All the best,
       <span class='flashing'>Cahil</span>
     `,
     sender: `<span class='flashing'>Cahil</span>`,
   },
   {
     content: trimmed`
-      Thanks for your commitment and persistence.
-
-      You always find a way to get it done.
+      Matt you are a great team member and helped us with progressing PASSPORT further.
+      
+      Thanks and keep in touch
     `,
-    sender: 'Fredy',
+    sender: 'Prateek',
   },
   {
     content: trimmed`
-      Hi Ayesha,
+      Matt, thanks for all of your support during some crazy times!
       
-      Thanks for your contribution to L&H reporting improvements. All the best for your new chapter!
+      Looking forward to working with you again in the future if the opportunity arises.
       
-      Cheers,
-      Ginger    
+      All the best!   
     `,
-    sender: 'Ginger',
+    sender: 'Matt (no not you silly, Matt Paps)',
   },
   {
     content: trimmed`
-      Hey Ayesha!
-
-      Thank you for all the hard work you’ve put in, the laughs, and most of all putting up with me :D I hope your next project goes smooth and that we cross paths again sooner rather than later. You’re always welcome for noodles. 
-      
-      Cheers,
-      Boxy    
+      Do
     `,
-    sender: 'Boxy',
+    sender: 'Bruce',
   },
 ]
