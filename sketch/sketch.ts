@@ -190,6 +190,8 @@ function draw() {
   if (nextRound) {
     if (roundNumber >= levels.length) {
       showVictoryMessage(titleFont, score)
+      buttons.retryButton.classList.remove('hidden')
+      buttons.continueButton.classList.add('hidden')
       victory = true
       return
     } else {
@@ -301,4 +303,21 @@ function handleKeyPress(key: string) {
 
 function keyPressed() {
   handleKeyPress(key)
+}
+
+interface Window {
+  killAllEnemies(): void
+}
+
+window.killAllEnemies = function killAllEnemies() {
+  console.warn(`I swear - if you're not a dev I'm gonna be so mad at you!`)
+
+  for (const enemy of enemies) {
+    if (!enemy.active) continue
+
+    score += enemy.score
+    enemy.explode()
+  }
+
+  enemies = []
 }
