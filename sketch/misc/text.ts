@@ -14,7 +14,7 @@ function showGameOverMessage(font: p5.Font, score: number, killedBy: string) {
   textFont(regularFont)
   strokeWeight(2)
   text(
-    `You were killed by: ${killedBy}`,
+    `You were cappered by: ${killedBy}`,
     windowWidth / 2,
     windowHeight / 2 + 125
   )

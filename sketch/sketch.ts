@@ -169,7 +169,7 @@ function setup() {
 
 function draw() {
   background(backgroundImage)
-  background(0, 150)
+  background(0, 200)
 
   if (gamepadController.controllers.some(({ buttons }) => buttons[0].pressed)) {
     handleKeyPress(' ')

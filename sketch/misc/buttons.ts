@@ -27,7 +27,11 @@ function setupButtons() {
   const exitButton = document.getElementById('exit')
 
   exitButton.onclick = function () {
-    require('electron').remote.getCurrentWindow().close()
+    if (typeof require === 'function') {
+      require('electron').remote.getCurrentWindow().close()
+    } else {
+      window.close()
+    }
   }
 
   return { continueButton, exitButton, muteButton, retryButton }

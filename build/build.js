@@ -280,7 +280,7 @@ function showGameOverMessage(font, score, killedBy) {
     textSize(35);
     textFont(regularFont);
     strokeWeight(2);
-    text(`You were killed by: ${killedBy}`, windowWidth / 2, windowHeight / 2 + 125);
+    text(`You were cappered by: ${killedBy}`, windowWidth / 2, windowHeight / 2 + 125);
     pop();
 }
 function showNextRoundMessage(font, roundNumber, message, prefix, action) {
@@ -659,7 +659,7 @@ function startRound(settings) {
         const allEnemies = shuffle(wave.flatMap((enemyType) => Array.from({ length: enemyType.count }).map((_, i) => enemyType.enemy)));
         for (let i = 0; i < allEnemies.length; i++) {
             let xPosition = xSpacing * i + xPadding;
-            let yPosition = ySpacing * waveNumber * 10;
+            let yPosition = ySpacing * waveNumber * 6;
             enemies.push(new allEnemies[i]({
                 pos: createVector(xPosition, -yPosition * random(0.8, 1.2) - 400),
                 vel: createVector(random(-1, 1), random(0.5, 2)),
@@ -688,7 +688,7 @@ function setup() {
 }
 function draw() {
     background(backgroundImage);
-    background(0, 150);
+    background(0, 200);
     if (gamepadController.controllers.some(({ buttons }) => buttons[0].pressed)) {
         handleKeyPress(' ');
     }
@@ -821,7 +821,12 @@ function setupButtons() {
     };
     const exitButton = document.getElementById('exit');
     exitButton.onclick = function () {
-        require('electron').remote.getCurrentWindow().close();
+        if (typeof require === 'function') {
+            require('electron').remote.getCurrentWindow().close();
+        }
+        else {
+            window.close();
+        }
     };
     return { continueButton, exitButton, muteButton, retryButton };
 }
@@ -830,7 +835,7 @@ let farewellMessages = [
         content: trimmed `
       Hola Matt!
 
-      I can’t believe you’re leaving me. It’s not fair. Who else will appreciate terrible pop culture references. No one. That’s who. Fine. Go. Bye Felicia.
+      I can't believe you're leaving me. It's not fair. Who else will appreciate terrible pop culture references. No one. That's who. Fine. Go. Bye Felicia.
       Despite my personal misery I wish you all the best in your next project and hope our paths cross again. Your expertise has been extremely valuable input into the team and we are in a much better place today because of it. The Koodaideri team will be very lucky to also share in your amazingness. Stay safe and classy.
       
       Boxy
