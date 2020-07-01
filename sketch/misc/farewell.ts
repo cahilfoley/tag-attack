@@ -101,4 +101,15 @@ let farewellMessages: Message[] = [
     `,
     sender: 'Bruce',
   },
+  {
+    content: trimmed`
+      Heyyy Matt,
+
+      I hope that your new place is full of fun and happiness. Take care, and wishing you all the best.
+
+      Cheers,
+      Sharief
+    `,
+    sender: 'Sharief',
+  },
 ]
